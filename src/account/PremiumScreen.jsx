@@ -65,6 +65,18 @@ export default function PremiumScreen({ onLogin, onClose, onNotice }) {
   const [busy, setBusy] = useState(null);
   const [error, setError] = useState(null);
 
+  // Al volver con «Atrás» desde Polar, el navegador puede restaurar la página tal como se fue
+  // (bfcache), con el botón en «Abriendo el pago…»: se desbloquea y se vuelve a consultar el plan.
+  useEffect(() => {
+    const onShow = (e) => {
+      if (!e.persisted) return;
+      setBusy(null);
+      refreshAccount();
+    };
+    window.addEventListener('pageshow', onShow);
+    return () => window.removeEventListener('pageshow', onShow);
+  }, []);
+
   useEffect(() => {
     closeRef.current?.focus();
     const onKey = (e) => e.key === 'Escape' && onClose();

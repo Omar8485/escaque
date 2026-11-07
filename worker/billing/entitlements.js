@@ -79,7 +79,19 @@ export function entitlementFromEvent(event, planOf, now = Date.now()) {
     };
   }
   if (type === 'order.paid' || type === 'order.refunded' || type === 'order.updated') {
-    if (planOf(data.product_id) !== 'founder') return null;
+    const orderPlan = planOf(data.product_id);
+    // Pago de una suscripción (alta o renovación): `order.paid` trae la suscripción incrustada. Se usa
+    // también como señal, por si los eventos `subscription.*` no llegan o llegan tarde. Lo que vale es
+    // el estado de la suscripción y su fecha de modificación (un evento posterior la reemplaza).
+    if (type === 'order.paid' && (orderPlan === 'monthly' || orderPlan === 'yearly') && data.subscription && typeof data.subscription === 'object') {
+      const sub = data.subscription;
+      return {
+        userId, kind: 'subscription', plan: orderPlan, status: subscriptionStatus('subscription.updated', sub),
+        periodEnd: toMs(sub.current_period_end) ?? toMs(sub.ends_at), customerId, ref: String(sub.id ?? data.subscription_id ?? ''),
+        sourceTs: toMs(sub.modified_at) ?? toMs(sub.created_at) ?? sourceTs,
+      };
+    }
+    if (orderPlan !== 'founder') return null;
     let status;
     if (data.status === 'refunded') status = 'refunded';
     else if (data.status === 'paid' || data.status === 'partially_refunded' || (type === 'order.paid' && data.paid !== false)) status = 'active';

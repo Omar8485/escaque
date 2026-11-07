@@ -116,6 +116,27 @@ describe('plan efectivo', () => {
     expect(entitlementFromEvent(ev, () => 'monthly')).toMatchObject({ userId: 'u1', status: 'active' });
   });
 
+  it('order.paid de una suscripción activa Premium con la suscripción incrustada (sin depender de subscription.*)', () => {
+    const periodEnd = '2026-12-07T18:48:56.416795Z';
+    const ev = {
+      type: 'order.paid',
+      timestamp: '2026-11-07T18:48:56.801895Z',
+      data: {
+        id: 'ord_s', status: 'paid', paid: true, product_id: 'p-m', billing_reason: 'subscription_create', subscription_id: 'sub_9',
+        modified_at: '2026-11-07T18:48:56.775977Z', customer_id: 'cus_9', customer: { id: 'cus_9', external_id: 'u9' }, metadata: { escaque_user_id: 'u9' },
+        subscription: { id: 'sub_9', status: 'active', cancel_at_period_end: false, current_period_end: periodEnd, created_at: '2026-11-07T18:48:56.418243Z', modified_at: null },
+      },
+    };
+    const plans = { 'p-m': 'monthly', 'p-f': 'founder' };
+    expect(entitlementFromEvent(ev, (id) => plans[id])).toMatchObject({
+      userId: 'u9', kind: 'subscription', plan: 'monthly', status: 'active', periodEnd: Date.parse(periodEnd), ref: 'sub_9', sourceTs: Date.parse('2026-11-07T18:48:56.418243Z'),
+    });
+    // Un reembolso de un pedido de suscripción no toca el plan (lo hacen los eventos de la suscripción).
+    expect(entitlementFromEvent({ ...ev, type: 'order.refunded', data: { ...ev.data, status: 'refunded' } }, (id) => plans[id])).toBeNull();
+    // Sin la suscripción incrustada, como antes: nada.
+    expect(entitlementFromEvent({ ...ev, data: { ...ev.data, subscription: undefined } }, (id) => plans[id])).toBeNull();
+  });
+
   it('webhookKeys: clave base64 de Standard Webhooks y UTF-8 del secreto completo', () => {
     const keys = webhookKeys(WEBHOOK_SECRET);
     expect(keys).toHaveLength(2);

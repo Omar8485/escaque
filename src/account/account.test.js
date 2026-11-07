@@ -15,6 +15,12 @@ describe('consentimiento en el inicio de sesión', () => {
     expect(readReturnParams('?account=error:token').noticeKey).toBe('account.result.error');
     expect(readReturnParams('?account=error:cancelled').noticeKey).toBe('account.result.cancelled');
   });
+  it('la vuelta del pago quita el customer_session_token de Polar de la barra de direcciones', () => {
+    const r = readReturnParams('?checkout=success&checkout_id=abc&customer_session_token=polar_cst_x');
+    expect(r.awaitPremium).toBe(true);
+    expect(r.cleanSearch).toBe('');
+    expect(readReturnParams('?customer_session_token=polar_cst_x&a=1').cleanSearch).toBe('?a=1');
+  });
 });
 
 describe('borrar la cuenta', () => {

@@ -189,6 +189,8 @@ npm run cf:deploy
 2. ☰ → **Hazte Premium**: deben verse los tres precios con el aviso «Modo de prueba»: Mensual 2,99 US$ · **Anual 19,99 US$ («Mejor valor», «1,67 US$ al mes · ahorra 44 %»)** · Fundador 49,99 US$ con «Quedan 500 plazas de 500».
 3. **Elegir** en Mensual → página de pago de Polar → tarjeta **4242 4242 4242 4242**, cualquier fecha futura y cualquier CVC.
 4. Vuelves a la app («¡Gracias! Activando Premium…»); en unos segundos el menú muestra «Premium mensual». Si no, mira en Polar **Settings → Webhooks → (endpoint) → Deliveries**: debe haber respuestas **202**. Un 403 = secreto distinto; 503 = falta `POLAR_WEBHOOK_SECRET` o la base D1.
+   - **405** en Deliveries = la URL del webhook no es exactamente `…/api/webhooks/polar` (Polar le está enviando el POST a otra ruta, que solo admite GET). Revisa la URL del endpoint y pulsa **Redeliver**.
+   - La activación de una suscripción llega por los eventos `subscription.*` y, desde 2026-11-07, también por `order.paid` (que trae la suscripción incrustada); el Fundador, por `order.paid`.
 5. **Gestionar suscripción y facturas** abre el portal de cliente de Polar; cancela desde ahí: la app muestra «Cancelada: Premium sigue activo hasta el …» y al terminar el período (evento `subscription.revoked`) vuelve al plan gratuito.
 6. Abre la app en otro navegador o en el móvil, entra con la misma cuenta y comprueba que llegan tus partidas (☰ → Tu Premium → Sincronización).
 

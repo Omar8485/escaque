@@ -3,9 +3,11 @@
 //                                            cuenta nueva sin la casilla de consentimiento)
 //   ?checkout=success&checkout_id=…          (pago terminado en Polar)
 //   ?premium=open[&portal=mock]              (vuelta desde el checkout o el portal)
+//   &customer_session_token=polar_cst_…      (Polar lo añade al volver del pago: da acceso a su portal
+//                                            de cliente, así que no debe quedar en la barra ni en el historial)
 // Se leen una vez al cargar y se quitan de la barra de direcciones.
 
-export const RETURN_PARAMS = Object.freeze(['account', 'checkout', 'checkout_id', 'premium', 'portal']);
+export const RETURN_PARAMS = Object.freeze(['account', 'checkout', 'checkout_id', 'premium', 'portal', 'customer_session_token']);
 
 /**
  * @param {string} search  location.search
