@@ -1,6 +1,6 @@
 import React from 'react';
 import { Award, LockKeyhole, Trophy } from 'lucide-react';
-import { ACHIEVEMENTS } from './achievements';
+import { ACHIEVEMENTS } from './achievements.js';
 import { useI18n } from '../i18n/useI18n';
 import { formatDate, formatNumber } from '../i18n/core';
 

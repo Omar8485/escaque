@@ -6,7 +6,7 @@ import { formatNumber } from '../i18n/core';
 import { levelProgress } from './xp';
 import RewardsDaily from './RewardsDaily';
 import RewardsProgress from './RewardsProgress';
-import Achievements, { AchievementNotice } from './Achievements';
+import Achievements, { AchievementNotice } from './AchievementsPanel.jsx';
 import { useGeneratorField } from '../puzzles/generator/useGeneratePuzzles';
 import { playAchievementSound } from './sound';
 import { getRewardsSnapshot, subscribeRewards, startRewardsRuntime, updateRewardsGoal, observeGeneratedPuzzles } from './runtime';
