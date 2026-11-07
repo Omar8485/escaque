@@ -210,7 +210,7 @@ Todo en **`src/appInfo.js`** (valor por defecto) o, sin tocar el código, como v
 
 | Valor | Variable | Por defecto | Para qué |
 |---|---|---|---|
-| `DEFAULT_SITE_URL` | `VITE_SITE_URL` | `https://coach-chess.example.workers.dev` (marcador) | `canonical`, `og:url`, `og:image`, `robots.txt` y `sitemap.xml`. Poner la URL pública sin barra final (p. ej. `https://coach-chess.<subdominio>.workers.dev` o el dominio propio). |
+| `DEFAULT_SITE_URL` | `VITE_SITE_URL` | `https://coach-chess.escaque.workers.dev` | `canonical`, `og:url`, `og:image`, `robots.txt` y `sitemap.xml`. URL pública sin barra final (cambiarla si se usa un dominio propio). |
 | `DEFAULT_CONTACT_EMAIL` | `VITE_CONTACT_EMAIL` | `escaque.ec@gmail.com` | Correo del responsable en las páginas de privacidad y términos (soporte y derechos sobre los datos). Vacío → muestran «CONTACT_EMAIL — pendiente de completar». |
 | `DEFAULT_CF_ANALYTICS_TOKEN` | `VITE_CF_ANALYTICS_TOKEN` | vacío (sin analítica) | Activa Cloudflare Web Analytics (ver abajo). |
 | `DEFAULT_FEEDBACK_URL` | `VITE_FEEDBACK_URL` | `https://github.com/Omar8485/escaque/issues` | Enlace «Enviar comentarios» del menú (`https://…` o `mailto:`; vacío lo oculta). Por defecto, los issues del repositorio público. |

@@ -6,11 +6,11 @@
 // y en public/manifest*.webmanifest.
 export const APP_NAME = 'Escaque';
 
-// COMPLETAR: URL pública, sin barra final (p. ej. https://escaque.app o
-// https://coach-chess.<tu-subdominio>.workers.dev). La usan las etiquetas canonical y Open Graph de
+// URL pública, sin barra final (subdominio de workers.dev elegido el 2026-11-07; si se usa un
+// dominio propio, cambiarla aquí o con VITE_SITE_URL). La usan las etiquetas canonical y Open Graph de
 // index.html, robots.txt y sitemap.xml (build-tools/site.js la inyecta en el build).
 // Variable de entorno: VITE_SITE_URL.
-export const DEFAULT_SITE_URL = 'https://coach-chess.example.workers.dev';
+export const DEFAULT_SITE_URL = 'https://coach-chess.escaque.workers.dev';
 
 // Correo de contacto del responsable (2026-11-07): aparece en las páginas
 // legales (public/privacidad.html, privacy.html, terminos.html y terms.html) para soporte y para

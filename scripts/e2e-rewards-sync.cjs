@@ -23,7 +23,8 @@ const baseIdx = args.indexOf('--base');
 const EXTERNAL = baseIdx >= 0 ? args[baseIdx + 1] : null;
 const PORT = 4742;
 const BASE = EXTERNAL || `http://localhost:${PORT}/`;
-const WEBHOOK_SECRET = 'whsec_AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcY';
+// Secreto FALSO de prueba (24 bytes 1..24), generado aquí para que no parezca una clave real.
+const WEBHOOK_SECRET = `whsec_${Buffer.from(Array.from({ length: 24 }, (_, i) => i + 1)).toString('base64')}`;
 // Partida terminada contra el nivel 1: base 30 + 3 × nivel = 33; +15 si todas tus jugadas quedan
 // clasificadas sin errores graves (e4 y Nf3 lo están en cuanto Stockfish termina, también sin red).
 const BASE_XP = 33;

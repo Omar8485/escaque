@@ -1018,6 +1018,7 @@ export default {
     buy: 'Choose',
     buying: 'Opening checkout…',
     owned: 'You have it',
+    ownedOther: 'You already have Premium',
     signInToBuy: 'Sign in to buy:',
     sandbox: 'Test mode: nothing is charged (test card 4242 4242 4242 4242).',
     merchant: 'Payments are processed by Polar Software, Inc. as merchant of record: prices in US dollars (USD), plus any taxes Polar calculates for your country, and invoices from Polar.',

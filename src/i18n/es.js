@@ -1056,6 +1056,7 @@ export default {
     buy: 'Elegir',
     buying: 'Abriendo el pago…',
     owned: 'Ya lo tienes',
+    ownedOther: 'Ya tienes Premium',
     signInToBuy: 'Inicia sesión para comprar:',
     sandbox: 'Modo de prueba: no se cobra nada (tarjeta de prueba 4242 4242 4242 4242).',
     merchant: 'Los pagos los procesa Polar Software, Inc. como comerciante registrado: precios en dólares (USD), con los impuestos que Polar calcule según tu país, y facturas de Polar.',

@@ -590,3 +590,8 @@ Tras desplegar los términos 1.0, el dueño vio en su navegador la app antigua (
 - `src/pwa/sw-template.js`: páginas legales y de licencias **primero a la red** (caché solo sin conexión).
 - `src/pwa/pwa.js`: si la página no está controlada y hay un SW esperando, se activa en silencio.
 - `scripts/e2e-pwa-update.cjs`: comprueba términos de la red con el SW antiguo y de la caché sin conexión (verificado: falla con el SW anterior).
+
+## Paso a producción y Microsoft Store (2026-11-07)
+
+- **Restos de sandbox:** al cambiar Polar a producción, las compras de prueba seguían en D1 (la misma base para ambos entornos): el dueño vio «Premium mensual · Cancelada» en producción. No fue Polar: fueron filas de `entitlements` de sandbox. Limpieza documentada en DEPLOY-ACCOUNTS §5.3. La pantalla Premium ahora dice «Ya lo tienes» solo en tu plan y «Ya tienes Premium» en la otra suscripción.
+- **Microsoft Store — para el futuro:** Escaque es un **juego** (ajedrez), así que la política 10.8.1 obliga a usar las compras de Microsoft en la versión de la Store. Opciones: (1) versión de la Store sin compras (Premium comprado en la web se usa iniciando sesión; confirmar antes con Microsoft que se permite en juegos), (2) compras con Microsoft vía Digital Goods API (integración, validación en el servidor y comisión de Microsoft), (3) sin Store por ahora (decisión del dueño, 2026-11-07): la PWA se instala desde Edge/Chrome. Revisar también el «Publisher display name» de la cuenta individual (es público). Guía: DEPLOY-ACCOUNTS §8.

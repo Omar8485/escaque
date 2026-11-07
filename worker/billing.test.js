@@ -29,7 +29,7 @@ describe('webhook de Polar', () => {
     const env = makeEnv();
     const { me: user } = await loginTest(env);
     const ev = subscriptionEvent('subscription.active', user.user.id);
-    expect((await sendWebhook(env, ev, { secret: 'whsec_b3Ryb3NlY3JldG90cm9zZWNyZXRv' })).status).toBe(403);
+    expect((await sendWebhook(env, ev, { secret: `whsec_${btoa('otrosecretotrosecreto')}` })).status).toBe(403);
     expect((await sendWebhook(env, ev, { timestamp: Math.floor(Date.now() / 1000) - 3600 })).status).toBe(403);
     const noHeaders = await worker.fetch(new Request(`${BASE}/api/webhooks/polar`, { method: 'POST', body: '{}' }), env, {});
     expect(noHeaders.status).toBe(403);

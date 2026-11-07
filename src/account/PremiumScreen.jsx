@@ -219,7 +219,10 @@ export default function PremiumScreen({ onLogin, onClose, onNotice }) {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {products.map((p) => {
                   const price = priceText(p.prices?.[0], lang, t);
+                  // «Ya lo tienes» solo en el plan que tienes (o en las suscripciones si eres Fundador);
+                  // con otra suscripción activa, el botón queda deshabilitado con «Ya tienes Premium».
                   const owned = plan.premium && p.plan !== 'founder';
+                  const ownedThis = owned && (plan.lifetime || plan.plan === p.plan);
                   const featured = p.plan === 'yearly' && Boolean(deal);
                   const soldOut = p.plan === 'founder' && Boolean(founderSlots?.soldOut);
                   return (
@@ -244,7 +247,7 @@ export default function PremiumScreen({ onLogin, onClose, onNotice }) {
                       {signedIn && (
                         <button type="button" data-testid={`premium-buy-${p.plan}`} disabled={Boolean(busy) || owned || soldOut} onClick={() => buy(p.plan)}
                           className={`mt-auto rounded-xl text-white text-sm font-bold px-3 py-2 disabled:opacity-50 ${featured ? 'bg-amber-600 hover:bg-amber-700' : 'bg-amber-500 hover:bg-amber-600'}`}>
-                          {busy === p.plan ? t('premium.buying') : soldOut ? t('premium.soldOut') : owned ? t('premium.owned') : t('premium.buy')}
+                          {busy === p.plan ? t('premium.buying') : soldOut ? t('premium.soldOut') : ownedThis ? t('premium.owned') : owned ? t('premium.ownedOther') : t('premium.buy')}
                         </button>
                       )}
                     </div>

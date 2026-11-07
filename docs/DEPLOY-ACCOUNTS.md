@@ -198,6 +198,15 @@ En sandbox, los correos de Polar solo llegan a miembros de la organización.
 
 Repite 5.1 en <https://polar.sh> (cuenta de producción, completa la verificación de la organización y la configuración de pagos/Stripe que pida Polar), con los nuevos IDs, token y secreto, y cambia `"POLAR_SERVER": "production"`. Vuelve a cargar `POLAR_ACCESS_TOKEN` y `POLAR_WEBHOOK_SECRET` (los de sandbox no sirven en producción) y despliega.
 
+**Borra los planes de prueba.** Las compras de sandbox quedaron guardadas en la base D1, que es la misma en sandbox y en producción: cambiar `POLAR_SERVER` no las quita, así que tus cuentas de prueba seguirían con Premium (y un Fundador de prueba ocuparía plaza). Antes de la primera venta real, mira qué hay y bórralo:
+
+```bash
+npx wrangler d1 execute escaque --remote --command "SELECT u.email, e.kind, e.plan, e.status, e.polar_ref FROM entitlements e JOIN users u ON u.id = e.user_id"
+npx wrangler d1 execute escaque --remote --command "DELETE FROM entitlements"
+```
+
+(Si ya hubo ventas reales, no borres todo: `DELETE FROM entitlements WHERE polar_ref = '<id de sandbox>'`, con los IDs que veas en sandbox.polar.sh.) Las cuentas y los datos sincronizados no se tocan.
+
 ### 5.4 Reembolsos y cierre (lo que prometen los Términos)
 
 - **14 días**: quien lo pida dentro de los 14 días siguientes a su primera compra de un plan (primer pago de mensual o anual, o el Fundador) recibe el reembolso **completo**, sin preguntas. Hazlo en Polar → **Orders** → el pedido → **Refund** (total). Polar envía `order.refunded` y la app quita ese Premium sola; en Fundador, la plaza se libera.
@@ -242,7 +251,7 @@ npx wrangler d1 migrations apply escaque --local
 npx wrangler dev --var AUTH_TEST_MODE:1 --var POLAR_SERVER:mock \
   --var POLAR_PRODUCT_MONTHLY:mock-monthly --var POLAR_PRODUCT_YEARLY:mock-yearly --var POLAR_PRODUCT_FOUNDER:mock-founder \
   --var SESSION_SECRET:una-cadena-local-de-al-menos-32-caracteres \
-  --var POLAR_WEBHOOK_SECRET:whsec_AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcY
+  --var POLAR_WEBHOOK_SECRET:whsec_<base64 de 24 bytes cualquiera, solo para pruebas>
 ```
 
 Con Google/Microsoft reales en local, crea `.dev.vars` (no se sube al repo; está en `.gitignore`) con `SESSION_SECRET=…`, `GOOGLE_CLIENT_ID=…`, etc., y registra las URIs `http://localhost:8787/api/auth/callback/…`.
@@ -253,7 +262,42 @@ Pruebas automáticas: `npm test` (incluye el Worker con D1 sobre SQLite de Node:
 
 ## 8. Microsoft Store
 
-La PWA en la Microsoft Store puede usar este mismo sistema de cobro (Polar) porque Escaque no es un juego: la política de la Store permite a las apps que no son juegos usar su propio sistema de pago. El inicio de sesión funciona igual dentro de la PWA instalada (navegación completa al proveedor y vuelta al mismo origen).
+La Store publicaría la misma PWA (no es otra app): el paquete solo abre `https://coach-chess.escaque.workers.dev`. Los cambios de código llegan solos; solo hay que volver a empaquetar y enviar si cambia el **manifiesto** (nombre, iconos, colores). Fuente: [Microsoft Learn — Publicar una PWA en la Microsoft Store](https://learn.microsoft.com/microsoft-edge/progressive-web-apps-chromium/how-to/microsoft-store).
+
+**⚠ En pausa (2026-11-07): Escaque es un juego.** El ajedrez es un juego y lo central de Escaque es jugar partidas contra los rivales; en la Store las apps de ajedrez van en **Juegos**. La política 10.8.1 permite a las apps que **no son juegos** usar «una API de compra segura de terceros» (Polar), pero exige a los **juegos** el sistema de compras de Microsoft; y la 10.1 exige que la categoría refleje con exactitud el producto. Declararla «Educación» para usar Polar sería engañoso y arriesga el rechazo o la retirada. Fuente: [Microsoft Store Policies](https://learn.microsoft.com/windows/uwp/publish/store-policies). Opciones pendientes de decisión:
+1. **Versión de la Store sin compras** (categoría Juegos): gratis, y quien ya tenga Premium (comprado en la web) inicia sesión y lo usa. Antes hay que confirmar con Microsoft que la política lo permite para juegos.
+2. **Compras con Microsoft** en la versión de la Store ([Digital Goods API](https://learn.microsoft.com/microsoft-edge/progressive-web-apps-chromium/how-to/digital-goods-api)): trabajo de integración y validación en el servidor, y Microsoft cobra su comisión.
+3. **Sin Store por ahora:** la PWA se instala desde el navegador (Edge/Chrome → «Instalar Escaque»).
+
+Los pasos de abajo valen para cualquiera de las opciones 1 y 2 (cambiando la categoría a **Games → Board** y la nota para certificación).
+
+**Antes de empezar — nombre público:** en la ficha de la Store aparece el **nombre para mostrar del editor** (Publisher display name) de tu cuenta de Partner Center. Míralo en Partner Center → ⚙ **Account settings** (configuración de la cuenta). Las cuentas individuales son para publicar «con tu propio nombre»; cambiarlo implica una revisión de la cuenta. Decide antes de enviar si te sirve el que tienes.
+
+### 8.1 Reservar el nombre
+1. <https://partner.microsoft.com/dashboard> → **Apps and games** → **New product** → **MSIX or PWA app**.
+2. Nombre: **Escaque** → **Reserve product name**. (Si estuviera tomado: «Escaque — entrenador de ajedrez».)
+3. **Product management → Product identity**: copia **Package/Identity/Name** (Package ID), **Package/Identity/Publisher** (Publisher ID, empieza por `CN=`) y **Package/Properties/PublisherDisplayName** (Publisher display name).
+
+### 8.2 Generar el paquete con PWABuilder
+1. <https://www.pwabuilder.com> → pega `https://coach-chess.escaque.workers.dev` → **Start**.
+2. Si el informe marca algo **obligatorio** en rojo, mándamelo; lo opcional (capturas en el manifiesto, accesos directos…) no impide publicar.
+3. **Package For Stores** → **Windows** → **Generate Package** → pega los tres valores de 8.1 tal cual. Deja la versión que propone (p. ej. `1.0.0.0`) → **Download Package**.
+4. El `.zip` trae un `.msixbundle` y un `.classic.appxbundle` (y unas instrucciones). **No lo subas al repositorio.**
+
+### 8.3 Envío (Start your submission)
+- **Pricing and availability:** mercados = todos; precio **Free** (gratis: Premium se compra dentro de la app con Polar). Visibilidad: pública.
+- **Properties:** categoría **Games** (subcategoría **Board**); URL de la política de privacidad: `https://coach-chess.escaque.workers.dev/privacidad`; web: `https://coach-chess.escaque.workers.dev/`; contacto de soporte: `escaque.ec@gmail.com`. Requisitos de sistema: teclado o ratón/táctil, sin más.
+- **Age ratings:** cuestionario IARC. Respuestas: no es un juego de azar ni tiene violencia, sexo, drogas ni lenguaje ofensivo; **no** hay comunicación entre usuarios ni contenido generado por usuarios visible para otros; **sí** hay compras digitales dentro de la app; **sí** se comparte el correo con fines de cuenta (inicio de sesión con Google/Microsoft). Debería salir para todas las edades.
+- **Packages:** sube el `.msixbundle` y el `.classic.appxbundle`.
+- **Store listings** (Español y English): descripción (abajo), al menos **1 captura** (mejor 4: Entrenar con el coach, Puzles, Progreso, Premium; 1920×1080 o 1366×768), el resto se toma del paquete.
+- **Submission options → Notes for certification:**
+  > (Redactar según la opción elegida arriba; no declarar que no es un juego.)
+
+### 8.4 Descripción para la ficha
+- **Español:** «Escaque es un entrenador de ajedrez: juegas contra 10 rivales con personalidad y un coach te detiene cuando cometes un error o un error grave y te explica por qué, con el análisis de Stockfish. Importa tus partidas de Lichess, Chess.com o PGN y entrena con puzles creados a partir de tus propios errores. Sigue tu progreso, gana experiencia y logros. Gratis y sin cuenta; Premium opcional para el historial completo y la sincronización entre dispositivos. IA opcional con tu propia clave. Código abierto (GPLv3).»
+- **English:** «Escaque is a chess trainer: play against 10 rivals with personality while a coach stops you when you make a mistake or a blunder and explains why, with Stockfish analysis. Import your games from Lichess, Chess.com or PGN and train with puzzles built from your own mistakes. Track your progress, earn XP and achievements. Free and without an account; optional Premium for full history and sync across devices. Optional AI with your own key. Open source (GPLv3).»
+
+La revisión suele tardar de 24 a 48 horas. Tras aprobarse, la URL de la Store se puede enlazar desde la app (pendiente).
 
 ---
 

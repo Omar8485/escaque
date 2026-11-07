@@ -28,7 +28,8 @@ const EXTERNAL = baseIdx >= 0 ? args[baseIdx + 1] : null;
 const OUT = args.filter((a, i) => baseIdx < 0 || (i !== baseIdx && i !== baseIdx + 1))[0] || null;
 const PORT = 8799;
 const BASE = EXTERNAL || `http://localhost:${PORT}/`;
-const WEBHOOK_SECRET = 'whsec_AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcY';
+// Secreto FALSO de prueba (24 bytes 1..24), generado aquí para que no parezca una clave real.
+const WEBHOOK_SECRET = `whsec_${Buffer.from(Array.from({ length: 24 }, (_, i) => i + 1)).toString('base64')}`;
 const TERMS_VERSION = '1.0'; // shared/legal.js
 const nb = (s) => String(s ?? '').replace(/[\u00a0\u202f]/g, ' ');
 
@@ -259,6 +260,9 @@ const PGN_GAME = (n) => ({
     await A.page.waitForSelector('[data-testid=account-section][data-plan=monthly]', { timeout: 40000 });
     check(true, 'Premium activo tras el webhook');
     await A.page.waitForSelector('[data-testid=premium-current][data-plan=monthly]');
+    check(nb(await A.page.textContent('[data-testid=premium-buy-monthly]')) === 'Ya lo tienes'
+      && nb(await A.page.textContent('[data-testid=premium-buy-yearly]')) === 'Ya tienes Premium'
+      && await A.page.isDisabled('[data-testid=premium-buy-yearly]'), 'con el mensual: «Ya lo tienes» en Mensual y «Ya tienes Premium» en Anual');
     await A.page.waitForSelector('[data-testid=account-sync-state][data-state=idle]', { timeout: 30000 });
     check(true, 'primera sincronización completada');
     await shot(A.page, 'premium-activo');
