@@ -83,6 +83,20 @@ describe('webhook de Polar', () => {
     expect((await me(env, jar)).plan.premium).toBe(false);
   });
 
+  it('suscripción: order.paid la activa y el reembolso total del pedido la quita (Términos §5)', async () => {
+    const env = makeEnv();
+    const { jar, me: user } = await loginTest(env);
+    const sub = { id: 'sub_r', status: 'active', cancel_at_period_end: false, current_period_end: new Date(Date.now() + 30 * 86_400_000).toISOString(), created_at: new Date(Date.now() - 5000).toISOString(), modified_at: null };
+    const paid = orderEvent('order.paid', user.user.id, { product: 'prod-monthly', id: 'ord_r', modifiedAt: new Date(Date.now() - 4000).toISOString() });
+    paid.data = { ...paid.data, billing_reason: 'subscription_create', subscription_id: 'sub_r', subscription: sub };
+    await sendWebhook(env, paid);
+    expect((await me(env, jar)).plan).toMatchObject({ premium: true, plan: 'monthly' });
+    const refunded = orderEvent('order.refunded', user.user.id, { product: 'prod-monthly', id: 'ord_r', status: 'refunded' });
+    refunded.data = { ...refunded.data, subscription_id: 'sub_r' };
+    await sendWebhook(env, refunded);
+    expect((await me(env, jar)).plan.premium).toBe(false);
+  });
+
   it('ignora productos ajenos, usuarios inexistentes y eventos sin interés (pero los registra)', async () => {
     const env = makeEnv();
     const { jar, me: user } = await loginTest(env);
@@ -131,8 +145,11 @@ describe('plan efectivo', () => {
     expect(entitlementFromEvent(ev, (id) => plans[id])).toMatchObject({
       userId: 'u9', kind: 'subscription', plan: 'monthly', status: 'active', periodEnd: Date.parse(periodEnd), ref: 'sub_9', sourceTs: Date.parse('2026-11-07T18:48:56.418243Z'),
     });
-    // Un reembolso de un pedido de suscripción no toca el plan (lo hacen los eventos de la suscripción).
-    expect(entitlementFromEvent({ ...ev, type: 'order.refunded', data: { ...ev.data, status: 'refunded' } }, (id) => plans[id])).toBeNull();
+    // Reembolso total del pedido de la suscripción: quita el acceso (Términos §5); parcial: nada.
+    const refunded = entitlementFromEvent({ ...ev, type: 'order.refunded', data: { ...ev.data, status: 'refunded', modified_at: '2026-11-07T19:30:00Z' } }, (id) => plans[id]);
+    expect(refunded).toMatchObject({ userId: 'u9', kind: 'subscription', plan: 'monthly', status: 'refunded', ref: 'sub_9', sourceTs: Date.parse('2026-11-07T19:30:00Z') });
+    expect(effectivePlan([{ kind: 'subscription', plan: 'monthly', status: refunded.status, current_period_end: refunded.periodEnd }]).premium).toBe(false);
+    expect(entitlementFromEvent({ ...ev, type: 'order.refunded', data: { ...ev.data, status: 'partially_refunded' } }, (id) => plans[id])).toBeNull();
     // Sin la suscripción incrustada, como antes: nada.
     expect(entitlementFromEvent({ ...ev, data: { ...ev.data, subscription: undefined } }, (id) => plans[id])).toBeNull();
   });

@@ -595,3 +595,16 @@ Tras desplegar los términos 1.0, el dueño vio en su navegador la app antigua (
 
 - **Restos de sandbox:** al cambiar Polar a producción, las compras de prueba seguían en D1 (la misma base para ambos entornos): el dueño vio «Premium mensual · Cancelada» en producción. No fue Polar: fueron filas de `entitlements` de sandbox. Limpieza documentada en DEPLOY-ACCOUNTS §5.3. La pantalla Premium ahora dice «Ya lo tienes» solo en tu plan y «Ya tienes Premium» en la otra suscripción.
 - **Microsoft Store — para el futuro:** Escaque es un **juego** (ajedrez), así que la política 10.8.1 obliga a usar las compras de Microsoft en la versión de la Store. Opciones: (1) versión de la Store sin compras (Premium comprado en la web se usa iniciando sesión; confirmar antes con Microsoft que se permite en juegos), (2) compras con Microsoft vía Digital Goods API (integración, validación en el servidor y comisión de Microsoft), (3) sin Store por ahora (decisión del dueño, 2026-11-07): la PWA se instala desde Edge/Chrome. Revisar también el «Publisher display name» de la cuenta individual (es público). Guía: DEPLOY-ACCOUNTS §8.
+
+## Primera venta real en producción (2026-11-07) — punto de retorno
+
+Estado: **en producción y cobrando** en https://coach-chess.escaque.workers.dev (Polar producción verificado). El dueño hizo una compra real del mensual (2,99) y la reembolsó.
+
+Incidencias y arreglos:
+1. **Webhook 405**: la URL del endpoint en Polar no apuntaba a `/api/webhooks/polar`; el dueño la corrigió y Redeliver dio 202. El endpoint solo tenía `order.paid`: hay que tener marcados también `subscription.*`, `order.updated`, `order.refunded`.
+2. **PR #26**: `order.paid` de una suscripción también activa Premium (trae la suscripción incrustada); el `customer_session_token` de Polar se borra de la URL; «Abriendo el pago…» se desbloquea al volver con Atrás (bfcache).
+3. **PR #27**: reembolso total de un pedido de suscripción (`order.refunded`, status refunded) quita el acceso (estado `refunded`), como dicen los Términos §5. Antes solo lo quitaban los eventos de suscripción, y Polar no cancela la suscripción al reembolsar. Guía §5.4: tras reembolsar, **revocar la suscripción** en Polar o se renueva y cobra.
+4. **PR #25**: secretos de webhook FALSOS de las pruebas generados al ejecutar (GitHub los marcó como «Stripe Webhook Signing Secret»: falsos positivos; el dueño debe cerrar las alertas en escaque → Security → Secret scanning → «Used in tests»).
+
+Pendiente del dueño: fusionar #27 + desplegar; revocar su suscripción de prueba en Polar; si el webhook de revocación ya se registró antes del despliegue, limpiar con `DELETE FROM entitlements` (solo había su compra). Google Auth → «In production». Cerrar alertas de GitHub. Luego: anunciar. Sin más compras reales de prueba (su banco y el IVA): la lógica queda cubierta por pruebas con payloads reales anonimizados.
+Repo público `escaque`: sincronizar tras cada merge (git archive de main + grep de datos personales + commit con autor noreply).

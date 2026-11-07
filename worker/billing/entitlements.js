@@ -91,6 +91,16 @@ export function entitlementFromEvent(event, planOf, now = Date.now()) {
         sourceTs: toMs(sub.modified_at) ?? toMs(sub.created_at) ?? sourceTs,
       };
     }
+    // Reembolso total del pago de una suscripción: los Términos (§5) dicen que el reembolso pone fin
+    // al Premium pagado con esa compra. Polar no cancela la suscripción al reembolsar, así que aquí se
+    // quita el acceso (estado «refunded»). Si la suscripción sigue viva y se renueva, el evento
+    // posterior (con fecha de modificación más nueva) vuelve a activarla. Reembolsos parciales: nada.
+    if (type === 'order.refunded' && (orderPlan === 'monthly' || orderPlan === 'yearly') && data.status === 'refunded') {
+      return {
+        userId, kind: 'subscription', plan: orderPlan, status: 'refunded', periodEnd: null, customerId,
+        ref: String(data.subscription_id ?? data.subscription?.id ?? ''), sourceTs,
+      };
+    }
     if (orderPlan !== 'founder') return null;
     let status;
     if (data.status === 'refunded') status = 'refunded';
