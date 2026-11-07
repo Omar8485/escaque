@@ -1,7 +1,8 @@
 // Prueba del aviso "Nueva versión disponible — Actualizar": sirve un build (A) con un servidor propio
 // (con COOP/COEP), deja que el SW lo precargue, cambia a un build B (copia de A con index.html
 // distinto y su sw.js regenerado con build-tools/pwa.js) y comprueba que aparece el aviso, que no
-// aparece en la primera visita y que "Actualizar" recarga con la versión B.
+// aparece en la primera visita y que "Actualizar" recarga con la versión B. Además, que los términos
+// se leen de la red aunque el SW sea el de A, y de la caché sin conexión.
 // Uso: npm run build && node scripts/e2e-pwa-update.cjs [dist]   (por defecto dist/)
 const fs = require('node:fs');
 const os = require('node:os');
@@ -53,6 +54,8 @@ async function makeBuildB() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'escaque-build-b-'));
   fs.cpSync(DIST_A, dir, { recursive: true });
   fs.appendFileSync(path.join(dir, 'index.html'), '\n<!-- e2e: build B -->\n');
+  const terms = path.join(dir, 'terminos.html');
+  fs.writeFileSync(terms, fs.readFileSync(terms, 'utf8').replace('</main>', '<p>e2e: terminos B</p></main>'));
   const { precacheConfig, renderServiceWorker } = await import(pathToFileURL(path.join(ROOT, 'build-tools/pwa.js')).href);
   const sha = (d) => crypto.createHash('sha256').update(d).digest('hex');
   const files = walk(dir).map((abs) => ({ path: `/${path.relative(dir, abs).split(path.sep).join('/')}`, hash: sha(fs.readFileSync(abs)) }));
@@ -102,6 +105,16 @@ const swBuild = (page) =>
   if (shown) {
     const text = await page.locator('[data-testid=update-toast]').textContent();
     check(/Nueva versión disponible/.test(text) && /Actualizar/.test(text), `texto del aviso: "${text.trim()}"`);
+    // Las páginas legales van primero a la red: con el SW de A todavía al mando, ya se leen las de B.
+    const legal = await context.newPage();
+    await legal.goto(`${url}terminos.html`);
+    const legalHtml = await legal.content();
+    check(legalHtml.includes('terminos B'), 'sin actualizar: los términos se leen de la red (versión B)');
+    await context.setOffline(true);
+    await legal.goto(`${url}terminos.html`).catch(() => {});
+    check(/Términos de uso/.test(await legal.content()), 'sin conexión: los términos salen de la caché');
+    await context.setOffline(false);
+    await legal.close();
     // No bloquea: el menú sigue respondiendo con el aviso visible.
     await page.click('[data-testid=menu-toggle]');
     check((await page.getByTestId('side-menu').getAttribute('data-open')) === 'true', 'con el aviso visible, la app sigue usable (menú abre)');

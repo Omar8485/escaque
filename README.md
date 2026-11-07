@@ -231,6 +231,10 @@ Con `npm run cf:deploy` la app queda en `https://coach-chess.<tu-subdominio>.wor
 
 Cada `npm run cf:deploy` genera un `sw.js` cuya versión depende del contenido del build. Quien tenga la app abierta ve el aviso **«Nueva versión disponible — Actualizar»** (no bloquea): al pulsarlo se activa la versión nueva y la página se recarga; si lo ignora, la versión nueva se aplica al cerrar todas las pestañas. `public/_headers` sirve `sw.js` con `Cache-Control: no-cache` para que el cambio se detecte en la siguiente visita. El motor tiene su propia caché (por hash): si no cambia, no se vuelve a descargar.
 
+- **Páginas legales y de licencias** (`/privacidad`, `/privacy`, `/terminos`, `/terms`, `/licencias`, `/licenses`): el service worker las pide **primero a la red** y solo usa la caché sin conexión, así que siempre se lee la versión publicada aunque la app sea la anterior.
+- **Página sin service worker al mando** (p. ej. tras Ctrl+Shift+R, que lo carga todo de la red): si hay una versión esperando, se activa en silencio, sin aviso ni recarga.
+- Durante la primera visita tras un despliegue, la app antigua (de la caché) habla con el Worker nuevo hasta que el usuario pulsa «Actualizar» o vuelve a abrir la app: un cambio incompatible en la API se nota en esa sesión (p. ej. el 403 `consent_required` de la sincronización al publicar los términos 1.0).
+
 ### Analítica (opcional, desactivada por defecto)
 
 1. Cloudflare → *Analytics & Logs* → **Web Analytics** → *Add a site* → copia el **token** del fragmento JS.

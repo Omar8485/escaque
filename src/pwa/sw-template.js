@@ -11,6 +11,9 @@
 //    la app no vuelve a descargarlo si el motor no cambió.
 //  - fetch: solo GET del mismo origen y fuera de /api. Primero la caché (los archivos llevan hash o
 //    son del mismo build) y, si no está, la red. Las navegaciones sin red caen en index.html.
+//  - Excepción: las páginas legales y de licencias van primero a la red (la caché solo sirve sin
+//    conexión). Así quien acepta los términos lee siempre la versión publicada, aunque su app sea
+//    la de antes y todavía no haya pulsado "Actualizar".
 //  - Todas las respuestas que sirve llevan COOP/COEP: sin ellas el navegador no aísla la página
 //    (crossOriginIsolated) y Stockfish multihilo no arranca.
 //  - Versión nueva: el navegador detecta un sw.js distinto, lo instala y lo deja esperando; la app
@@ -133,9 +136,32 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(respond(req, url));
 });
 
+/** Páginas que se piden primero a la red (claves de caché, sin `.html`). */
+const NETWORK_FIRST = new Set(['/privacidad', '/privacy', '/terminos', '/terms', '/licencias', '/licenses']);
+
+async function networkFirst(req, key) {
+  try {
+    // Por URL (no el Request de navegación, que no sigue redirecciones /x.html → /x).
+    const res = await fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' });
+    if (res.ok) {
+      const cache = await caches.open(SHELL_CACHE);
+      await cache.put(key, withIsolation(res.clone())).catch(() => {});
+      return withIsolation(res);
+    }
+    const cached = await caches.match(key);
+    return withIsolation(cached ?? res);
+  } catch (err) {
+    const cached = await caches.match(key);
+    if (cached) return withIsolation(cached);
+    throw err;
+  }
+}
+
 async function respond(req, url) {
+  const key = cacheKey(url.pathname);
+  if (NETWORK_FIRST.has(key)) return networkFirst(req, key);
   const isNavigation = req.mode === 'navigate';
-  const cached = await caches.match(cacheKey(url.pathname), { ignoreSearch: isNavigation });
+  const cached = await caches.match(key, { ignoreSearch: isNavigation });
   if (cached) return withIsolation(cached);
   try {
     return withIsolation(await fetch(req));

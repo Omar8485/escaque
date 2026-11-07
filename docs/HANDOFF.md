@@ -583,3 +583,10 @@ Decisiones aceptadas por el dueño (sin abogado; revisión del marco legal por C
 - **Sin datos personales en el código:** las páginas legales dicen «el titular de Escaque» (el dueño decidió **no** usar `VITE_CONTROLLER_NAME`); los fixtures de Lichess del dueño se anonimizaron (`jugador_demo`, IDs `Demo0001…`; archivos `demo-lichess.pgn` y `demo-recent20.json`).
 - **Enlaces:** términos, `worker/proxy.js` (User-Agent) y el menú «Enviar comentarios» apuntan a `Omar8485/escaque` (issues).
 - **Sincronizar:** al publicar una versión nueva, copiar el árbol de `main` (sin `.git`) a `escaque` y hacer un commit con el autor noreply; antes, `git grep -i` de nombre/correo personal debe salir vacío.
+
+## Actualizaciones de la PWA (2026-11-07)
+
+Tras desplegar los términos 1.0, el dueño vio en su navegador la app antigua (de la caché del SW) contra el Worker nuevo: la sincronización daba 403 `consent_required` y, tras Ctrl+Shift+R, los términos seguían saliendo de la caché antigua (fechados el 3 de noviembre). Arreglos:
+- `src/pwa/sw-template.js`: páginas legales y de licencias **primero a la red** (caché solo sin conexión).
+- `src/pwa/pwa.js`: si la página no está controlada y hay un SW esperando, se activa en silencio.
+- `scripts/e2e-pwa-update.cjs`: comprueba términos de la red con el SW antiguo y de la caché sin conexión (verificado: falla con el SW anterior).

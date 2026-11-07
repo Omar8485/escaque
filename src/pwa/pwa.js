@@ -67,8 +67,13 @@ export function applyUpdate() {
 function watchRegistration(reg) {
   registration = reg;
   // Solo hay "versión nueva" si ya había un SW controlando la página (la primera instalación no).
+  // Si la página NO está controlada pero hay uno esperando (p. ej. tras Ctrl+Shift+R, que carga todo
+  // de la red), la página ya es la versión nueva: se activa el SW en silencio, sin aviso ni recarga,
+  // para que las demás páginas (y la próxima visita) dejen de salir de la caché antigua.
   const markIfWaiting = () => {
-    if (reg.waiting && navigator.serviceWorker.controller) set({ updateReady: true });
+    if (!reg.waiting) return;
+    if (navigator.serviceWorker.controller) set({ updateReady: true });
+    else reg.waiting.postMessage({ type: 'SKIP_WAITING' });
   };
   markIfWaiting();
   reg.addEventListener('updatefound', () => {
