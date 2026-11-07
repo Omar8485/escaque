@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coach-summary-v1",
+  "title": "GameSummary (docs/COACH_DESIGN.md §5.2)",
+  "type": "object",
+  "properties": {
+    "headline": {
+      "type": "string",
+      "description": "1 oración"
+    },
+    "strengths": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
+    "improvements": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "string"
+      }
+    },
+    "keyMoments": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "ply": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ply",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "nextFocus": {
+      "type": "string",
+      "enum": [
+        "piezas_sin_defensa",
+        "ataque_doble",
+        "clavada",
+        "seguridad_del_rey",
+        "desarrollo",
+        "centro",
+        "final",
+        "apertura",
+        "calculo_de_capturas"
+      ]
+    }
+  },
+  "required": [
+    "headline",
+    "strengths",
+    "improvements",
+    "keyMoments",
+    "nextFocus"
+  ],
+  "additionalProperties": false
+}

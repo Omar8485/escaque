@@ -1,0 +1,126 @@
+{
+  "forbiddenSquares": [],
+  "request": {
+    "schemaVersion": 1,
+    "promptVersion": "coach-v4",
+    "requestType": "move_feedback",
+    "locale": "es",
+    "player": {
+      "color": "w",
+      "rating": 1495
+    },
+    "rival": {
+      "level": 6,
+      "label": "Héctor"
+    },
+    "game": {
+      "ply": 7,
+      "moveNumber": 4,
+      "phase": "apertura",
+      "materialBalance": 1,
+      "opening": {
+        "name": "Italian Game: Blackburne-Kostić Gambit",
+        "inBook": false
+      }
+    },
+    "lastRivalMove": {
+      "san": "Nd4",
+      "piece": "n",
+      "to": "d4",
+      "capture": null
+    },
+    "classification": {
+      "label": "Mistake",
+      "color": "w",
+      "moveUci": "f3e5",
+      "moveSan": "Nxe5",
+      "evalBefore": {
+        "type": "cp",
+        "value": 104
+      },
+      "evalAfter": {
+        "type": "cp",
+        "value": -64
+      },
+      "winBefore": 59.5,
+      "winAfter": 44.1,
+      "loss": 15.3,
+      "isBest": false,
+      "bestMoveSan": null,
+      "pvSan": null,
+      "depthBefore": 18,
+      "depthAfter": 18
+    },
+    "moveDetails": {
+      "piece": "n",
+      "from": "f3",
+      "to": "e5",
+      "capture": "p",
+      "check": false,
+      "castle": false,
+      "promotion": null
+    },
+    "coachFacts": {
+      "greatMove": false,
+      "playedRank": null,
+      "stillWinning": false,
+      "mateAllowed": false,
+      "mateMissed": false,
+      "evalLabelBefore": "ligera ventaja",
+      "evalLabelAfter": "igualdad"
+    },
+    "refutation": {
+      "san": "Qg5",
+      "piece": "q",
+      "to": "g5",
+      "check": false,
+      "captures": null,
+      "motif": "ataque_doble",
+      "mateIn": null,
+      "targets": [
+        {
+          "square": "e5",
+          "piece": "n",
+          "defended": false
+        },
+        {
+          "square": "g2",
+          "piece": "p",
+          "defended": false
+        }
+      ]
+    },
+    "hanging": [],
+    "opponentLoose": null,
+    "hintFacts": null,
+    "history": {
+      "recentLabels": [
+        "Best",
+        "Excellent",
+        "Good"
+      ],
+      "repeatedMotif": null,
+      "takebacks": 0,
+      "hintsUsed": 0
+    },
+    "policy": {
+      "offerTakeback": true,
+      "revealBestMove": false,
+      "showNumbers": false,
+      "hintLevel": null
+    },
+    "allowedMoves": [
+      "Nd4",
+      "Nxe5",
+      "Qg5"
+    ],
+    "allowedSquares": [
+      "d4",
+      "f3",
+      "e5",
+      "g5",
+      "g2"
+    ],
+    "userQuestion": null
+  }
+}

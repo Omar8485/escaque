@@ -1,0 +1,87 @@
+{
+  "forbiddenSquares": [
+    "g5"
+  ],
+  "request": {
+    "schemaVersion": 1,
+    "promptVersion": "coach-v4",
+    "requestType": "hint",
+    "locale": "es",
+    "player": {
+      "color": "b",
+      "rating": 1495
+    },
+    "rival": {
+      "level": 6,
+      "label": "Héctor"
+    },
+    "game": {
+      "ply": 8,
+      "moveNumber": 4,
+      "phase": "apertura",
+      "materialBalance": -1,
+      "opening": {
+        "name": "Italian Game: Blackburne-Kostić Gambit",
+        "inBook": false
+      }
+    },
+    "lastRivalMove": {
+      "san": "Nxe5",
+      "piece": "n",
+      "to": "e5",
+      "capture": "p"
+    },
+    "classification": null,
+    "moveDetails": null,
+    "coachFacts": {
+      "greatMove": null,
+      "playedRank": null,
+      "stillWinning": null,
+      "mateAllowed": null,
+      "mateMissed": null,
+      "evalLabelBefore": "igualdad",
+      "evalLabelAfter": null
+    },
+    "refutation": null,
+    "hanging": null,
+    "opponentLoose": [
+      {
+        "square": "e5",
+        "piece": "n"
+      },
+      {
+        "square": "e4",
+        "piece": "p"
+      }
+    ],
+    "hintFacts": {
+      "motif": "ataque_doble",
+      "bestPiece": "q",
+      "bestFrom": "d8"
+    },
+    "history": {
+      "recentLabels": [
+        "Best",
+        "Good"
+      ],
+      "repeatedMotif": null,
+      "takebacks": 0,
+      "hintsUsed": 1
+    },
+    "policy": {
+      "offerTakeback": false,
+      "revealBestMove": false,
+      "showNumbers": false,
+      "hintLevel": 2
+    },
+    "allowedMoves": [
+      "Nxe5"
+    ],
+    "allowedSquares": [
+      "e5",
+      "e4",
+      "d8"
+    ],
+    "userQuestion": null
+  }
+}

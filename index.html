@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Barra del navegador / ventana instalada: crema en claro, café en oscuro (useTheme.js la cambia). -->
+    <meta name="theme-color" content="#faf6f0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Escaque" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <!-- Título y descripción en español; src/seo/documentMeta.js los cambia al idioma de la app.
+         %SITE_URL% lo sustituye el build (src/appInfo.js / VITE_SITE_URL; build-tools/site.js). -->
+    <title>Escaque — entrenador de ajedrez con coach</title>
+    <meta name="description" content="Juega contra 10 rivales con personalidad mientras un coach te detiene ante tus errores y te explica por qué. Importa tus partidas de Lichess o Chess.com y entrena tus propios fallos. Gratis, en tu navegador y sin cuenta." />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Escaque" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:title" content="Escaque — entrenador de ajedrez con coach" />
+    <meta property="og:description" content="Juega contra 10 rivales con personalidad mientras un coach te detiene ante tus errores y te explica por qué. Importa tus partidas de Lichess o Chess.com y entrena tus propios fallos. Gratis, en tu navegador y sin cuenta." />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Escaque: entrena ajedrez con un coach" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Escaque — entrenador de ajedrez con coach" />
+    <meta name="twitter:description" content="Juega contra 10 rivales con personalidad mientras un coach te detiene ante tus errores y te explica por qué. Importa tus partidas de Lichess o Chess.com y entrena tus propios fallos. Gratis, en tu navegador y sin cuenta." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+    <script>
+      // Aplica el tema guardado antes de pintar (evita el parpadeo claro → oscuro). Ver useTheme.js.
+      try {
+        if (localStorage.getItem('coach-chess:theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#14110e');
+        }
+      } catch (e) {}
+      // Idioma antes de pintar (<html lang>): elección guardada o el navegador; ver src/i18n/core.js.
+      try {
+        var l = null;
+        try { l = localStorage.getItem('escaque:lang'); } catch (e) {}
+        if (l !== 'es' && l !== 'en') {
+          l = 'en';
+          var ls = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+          for (var i = 0; i < ls.length; i++) {
+            var b = String(ls[i] || '').toLowerCase().split(/[-_]/)[0];
+            if (b === 'es' || b === 'en') { l = b; break; }
+          }
+        }
+        document.documentElement.lang = l;
+        // Manifiesto en el idioma de la app (ver src/seo/documentMeta.js).
+        if (l === 'en') document.querySelector('link[rel="manifest"]').setAttribute('href', '/manifest.en.webmanifest');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Un solo Worker sirve el build de Vite (dist/) y la API bajo /api, en el mismo origen.
+  // La IA del coach es opcional y la pone cada usuario con su propia clave, que vive solo en su
+  // navegador (src/llm/settings.js). Las cuentas (opcionales) usan D1; ver docs/DEPLOY-ACCOUNTS.md.
+  "name": "coach-chess",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    // Salida de `vite build`. public/_headers se copia aquí y aplica COOP/COEP
+    // a todos los archivos estáticos (HTML, JS, .wasm) sin invocar al Worker.
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Solo /api y /api/* ejecutan el Worker: el resto se sirve como asset estático
+    // (gratis e ilimitado, no consume las 100.000 peticiones/día del plan Free).
+    "run_worker_first": ["/api", "/api/*"]
+  },
+  // Base de datos de cuentas, Premium y sincronización. Crear con:
+  //   npx wrangler d1 create escaque
+  // y pegar aquí el "database_id" que imprime. Migraciones en migrations/ (wrangler d1 migrations apply).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "escaque",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Límites de frecuencia (aproximados, por ubicación de Cloudflare). Si faltan, el Worker usa un
+  // contador en memoria. namespace_id: cualquier entero único en la cuenta.
+  "ratelimits": [
+    { "name": "RL_AUTH", "namespace_id": "4691001", "simple": { "limit": 20, "period": 60 } },
+    { "name": "RL_API", "namespace_id": "4691002", "simple": { "limit": 120, "period": 60 } },
+    { "name": "RL_WEBHOOK", "namespace_id": "4691003", "simple": { "limit": 120, "period": 60 } }
+  ],
+  // Variables públicas (no secretas). Los secretos van con `npx wrangler secret put NOMBRE`:
+  // SESSION_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET,
+  // POLAR_ACCESS_TOKEN, POLAR_WEBHOOK_SECRET.
+  "vars": {
+    // "sandbox" mientras se prueba; "production" para cobrar de verdad.
+    "POLAR_SERVER": "sandbox",
+    // IDs de producto de Polar (vacíos = Premium sin precios ni compra; la app sigue funcionando).
+    "POLAR_PRODUCT_MONTHLY": "",
+    "POLAR_PRODUCT_YEARLY": "",
+    "POLAR_PRODUCT_FOUNDER": "",
+    // Plazas del plan «Fundador» (pago único): cuando hay tantos derechos de por vida activos en D1,
+    // la compra se bloquea y la app muestra «Agotado». Decisión del dueño: los primeros 500.
+    "FOUNDER_LIMIT": "500"
+  },
+  "observability": { "enabled": true }
+}

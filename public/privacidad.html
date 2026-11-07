@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="alternate" hreflang="en" href="/privacy.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Política de privacidad · Escaque</title>
+<style>
+  :root { --bg:#faf6f0; --fg:#2b2420; --muted:#6b5f57; --link:#b4532a; --card:#fff; --line:#e7ded3; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14110e; --fg:#efe7de; --muted:#b3a597; --link:#e58a5f; --card:#1d1915; --line:#3a322b; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.6rem; margin:0 0 4px; } h2 { font-size:1.15rem; margin:32px 0 8px; } h3 { font-size:1rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--link); overflow-wrap:anywhere; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 20px; margin-top:16px; }
+  section h2 { margin-top:0; }
+  code { font-size:.9em; overflow-wrap:anywhere; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Política de privacidad</h1>
+  <p class="muted"><a href="/">← Volver a Escaque</a> · <a href="/privacy.html" hreflang="en" lang="en">English</a> · <a href="/terminos.html">Términos de uso</a></p>
+  <p class="muted" data-legal-version="1.0">Versión 1.0 · Vigente desde el 7 de noviembre de 2026.</p>
+
+  <section id="responsable">
+    <h2>1. Quién es el responsable</h2>
+    <p>El responsable del tratamiento de los datos personales y titular del servicio Escaque es <strong><span class="controller">%CONTROLLER%</span></strong>, persona natural con domicilio en Quito, Ecuador.</p>
+    <p>Contacto para cualquier pregunta sobre privacidad y para ejercer tus derechos: <span class="contact">%CONTACT_EMAIL%</span>.</p>
+    <p>Esta política se rige por la Ley Orgánica de Protección de Datos Personales de Ecuador (LOPDP, Quinto Suplemento del Registro Oficial 459, 26 de mayo de 2021). Si vives en la Unión Europea, también te informamos según el Reglamento General de Protección de Datos (RGPD, Reglamento UE 2016/679).</p>
+  </section>
+
+  <section>
+    <h2>2. En resumen</h2>
+    <ul>
+      <li><strong>Sin cuenta, Escaque no guarda tus datos personales en sus servidores.</strong> Tus partidas, tu progreso, tus recompensas, tus preferencias y, si la pones, tu clave de IA se quedan en tu navegador.</li>
+      <li>La <strong>cuenta es opcional</strong> (con Google o Microsoft), solo para mayores de 16 años, y solo sirve para Premium y para sincronizar tus datos entre dispositivos. Al crearla das tu consentimiento explícito a lo que explica esta política.</li>
+      <li>La app solo se comunica con otros servicios cuando tú lo pides: importar partidas (Lichess, Chess.com), usar la IA opcional con tu propia clave, iniciar sesión (Google, Microsoft) o comprar Premium (Polar).</li>
+      <li>Sin publicidad, sin perfiles comerciales y sin cookies de terceros. No vendemos ni cedemos tus datos.</li>
+      <li>Puedes borrar tu cuenta y todos tus datos del servidor desde la app, cuando quieras.</li>
+    </ul>
+  </section>
+
+  <section id="navegador">
+    <h2>3. Sin cuenta: todo queda en tu navegador</h2>
+    <p>Lo siguiente se guarda solo en el almacenamiento de tu navegador (IndexedDB, <code>localStorage</code> y <code>sessionStorage</code>), en tu dispositivo. No se envía a Escaque:</p>
+    <ul>
+      <li>Las partidas que importas o juegas en Entrenar, sus análisis, las jugadas, los puzles generados a partir de ellas y tu progreso.</li>
+      <li>Tus recompensas: experiencia (XP) y nivel, racha y meta diaria, y logros.</li>
+      <li>Preferencias: idioma, tema claro/oscuro, sonido, tablero, coach y rival elegidos, tu nombre visible y tu avatar, y si ya viste la bienvenida.</li>
+      <li>Los nombres de usuario de Lichess o Chess.com que vinculas para importar.</li>
+      <li>La configuración de la IA opcional. La <strong>clave</strong> se guarda en este navegador solo si marcas «Recordar la clave en este equipo»; si no, solo vive en memoria hasta que recargas. Los comentarios de la IA se guardan un rato en <code>sessionStorage</code> para no pedirlos dos veces. <strong>La clave nunca se sincroniza ni se envía a Escaque.</strong></li>
+      <li>Una copia de los archivos de la app (incluido el motor Stockfish, unos 7 MB) para que funcione sin conexión y cargue más rápido.</li>
+    </ul>
+    <p>Stockfish, el motor de ajedrez, se ejecuta en tu dispositivo: las posiciones que analiza no salen de él.</p>
+    <p><strong>Datos técnicos de conexión.</strong> Como cualquier sitio web, al servirte la app nuestro proveedor de alojamiento (Cloudflare) recibe datos técnicos de cada petición, como tu dirección IP, el navegador y la dirección pedida. La app consulta <code>/api/me</code> al abrirse (para saber si hay sesión) y, para frenar abusos, algunas rutas cuentan las peticiones por dirección IP o por usuario sin guardarlas. Las peticiones a <code>/api</code> quedan en registros técnicos de Cloudflare durante unos días (3 en el plan gratuito, como máximo 7). No usamos estos datos para identificarte ni para nada más que el funcionamiento y la seguridad del servicio.</p>
+  </section>
+
+  <section id="cuenta">
+    <h2>4. Si creas una cuenta</h2>
+    <p>Iniciar sesión es opcional y requiere tener <strong>16 años o más</strong>. Antes del primer inicio de sesión te pedimos marcar una casilla para aceptar los <a href="/terminos.html">Términos de uso</a> y esta política, incluida la transferencia de tus datos a los proveedores indicados fuera de Ecuador (sección 6). Sin esa casilla no se crea la cuenta.</p>
+    <h3>Qué datos guarda el servidor de Escaque</h3>
+    <p>El servidor (Cloudflare Workers y la base de datos Cloudflare D1) guarda:</p>
+    <ul>
+      <li><strong>Correo electrónico y nombre visible</strong> que te asigna Google o Microsoft (si el proveedor los da).</li>
+      <li><strong>Identificador de tu cuenta en el proveedor</strong> (el identificador que Google o Microsoft dan a Escaque) y qué proveedor usaste. No guardamos contraseñas ni los tokens de Google o Microsoft: solo se usan un instante para comprobar tu identidad.</li>
+      <li><strong>Constancia de tu consentimiento</strong>: la versión de los términos y de esta política que aceptaste y la fecha.</li>
+      <li><strong>Sesiones</strong>: solo un resumen criptográfico (hash) del token de la cookie, su fecha de creación, su caducidad y el último uso (anotado como mucho una vez al día). Como máximo 10 sesiones por persona.</li>
+      <li><strong>Plan y estado de la suscripción</strong>: mensual, anual o Fundador; activo, cancelado, con pago pendiente, vencido o reembolsado; fin del período pagado; y los identificadores de cliente y de suscripción o pedido en Polar.</li>
+      <li><strong>Datos sincronizados</strong>, solo si tienes Premium (sección 5).</li>
+      <li><strong>Registro de avisos de Polar</strong> ya procesados (identificador, tipo y fecha del aviso), para no procesarlos dos veces.</li>
+    </ul>
+    <h3>Para qué y con qué base legal</h3>
+    <ul>
+      <li>Crear y mantener tu cuenta, reconocerte cuando vuelves y mostrarte tu plan: <strong>tu consentimiento explícito</strong>, que das al marcar la casilla (LOPDP arts. 7 y 8; RGPD art. 6.1.a).</li>
+      <li>Prestarte Premium y la sincronización que contratas, y gestionar el pago con Polar: <strong>ejecución del contrato</strong> (LOPDP art. 7; RGPD art. 6.1.b).</li>
+      <li>Proteger el servicio frente a abusos (límites de peticiones, registros técnicos): <strong>interés legítimo</strong> en la seguridad del servicio (LOPDP art. 7; RGPD art. 6.1.f).</li>
+    </ul>
+    <p>No tomamos decisiones automatizadas que te produzcan efectos jurídicos ni elaboramos perfiles.</p>
+    <h3 id="conservacion">Cuánto tiempo se guardan</h3>
+    <ul>
+      <li><strong>Cuenta, constancia del consentimiento y plan</strong>: mientras exista la cuenta. Al borrarla, se eliminan al momento.</li>
+      <li><strong>Sesiones</strong>: caducan a los 30 días o al cerrar sesión; las caducadas se eliminan de la base en la siguiente limpieza automática.</li>
+      <li><strong>Datos sincronizados</strong>: hasta que los borres o borres la cuenta. Si dejas de tener Premium, la copia se conserva (para que la recuperes si vuelves) y puedes borrarla igualmente cuando quieras.</li>
+      <li><strong>Avisos de Polar procesados</strong>: 30 días.</li>
+      <li><strong>Registros técnicos de Cloudflare</strong>: unos días (3 en el plan gratuito, como máximo 7).</li>
+      <li><strong>Copias de seguridad</strong>: la base de datos tiene una función de restauración (Time Travel de Cloudflare D1) que conserva su historial unos días (7 en el plan gratuito, como máximo 30). Lo que borras desaparece de ella cuando vence ese plazo; solo la usaríamos para recuperar el servicio tras un fallo.</li>
+      <li>Los <strong>registros de compra</strong> los conserva Polar como comerciante registrado, durante los plazos que le exigen las leyes fiscales.</li>
+    </ul>
+  </section>
+
+  <section id="sincronizacion">
+    <h2>5. Datos sincronizados (solo Premium)</h2>
+    <p>Si tienes Premium, la app sube al servidor de Escaque una copia de tus datos para tenerlos en todos tus dispositivos: partidas (PGN, rivales, Elo y fechas), análisis del motor, jugadas de las partidas de Entrenar, puzles y su progreso (resultados, Elo de puzles y repaso espaciado), recompensas (XP, rachas, meta diaria y logros), cuentas de Lichess o Chess.com vinculadas y marcas de importación, tu perfil (nombre visible y avatar) y las preferencias del coach, del tablero y de la voz del rival.</p>
+    <p><strong>No se sincronizan</strong> tu clave de IA, la configuración de la IA, el tema claro/oscuro, el idioma ni el sonido. Cuando borras algo que estaba sincronizado, queda en el servidor una marca mínima de borrado (sin el contenido) para que los demás dispositivos también lo borren. Hay límites técnicos de espacio (25 MB) y de cambios diarios por persona.</p>
+  </section>
+
+  <section id="terceros">
+    <h2>6. Con quién se comparten datos y transferencias internacionales</h2>
+    <p>No vendemos tus datos ni los usamos para publicidad. Solo intervienen estos proveedores, cada uno para lo indicado:</p>
+    <ul>
+      <li><strong>Cloudflare, Inc.</strong> (Estados Unidos, red global) — encargado del tratamiento: aloja la app, ejecuta el servidor (Workers) y guarda la base de datos (D1) con los datos de la cuenta. <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Política de privacidad de Cloudflare</a>.</li>
+      <li><strong>Google LLC</strong> (Estados Unidos) y <strong>Microsoft Corporation</strong> (Estados Unidos), solo si eliges iniciar sesión con ellos: reciben la solicitud de inicio de sesión y nos devuelven tu nombre, tu correo y un identificador. En sus páginas se aplican sus propias políticas y cookies (<a href="https://policies.google.com/privacy" rel="noopener">Google</a>, <a href="https://privacy.microsoft.com/privacystatement" rel="noopener">Microsoft</a>).</li>
+      <li><strong>Polar Software, Inc.</strong> (Estados Unidos), solo si compras Premium o gestionas tu suscripción. Polar es el <strong>comerciante registrado</strong> (merchant of record) de las compras: le enviamos tu identificador interno de Escaque y tu correo, y Polar trata por su cuenta, como responsable, los datos de pago (tarjeta, país, impuestos y facturación) según su <a href="https://polar.sh/legal/privacy-policy" rel="noopener">política de privacidad</a>. Polar usa Stripe para procesar los pagos. <strong>Escaque no ve ni guarda datos de tarjetas.</strong></li>
+      <li><strong>Lichess</strong> (<code>lichess.org</code>), solo si importas desde Lichess: tu navegador le pide directamente las partidas públicas del nombre de usuario que escribes.</li>
+      <li><strong>Chess.com</strong> (<code>api.chess.com</code>), solo si importas desde Chess.com: tu navegador pide las partidas públicas del nombre de usuario que escribes. Si el navegador no puede leer la respuesta directamente, la petición pasa por un reenvío de Escaque (<code>/api/proxy/chesscom</code>) que solo transmite esa consulta pública, sin cookies ni otras cabeceras de tu navegador, y no guarda nada; la URL incluye el nombre de usuario y Cloudflare puede guardar la respuesta pública en su caché unos minutos.</li>
+      <li><strong>El proveedor de IA que tú elijas</strong> (Google Gemini, OpenAI, Anthropic, OpenRouter o un servidor compatible que indiques), solo si activas la IA con <strong>tu propia clave</strong>. Tu navegador llama directamente al proveedor; Escaque no recibe ni guarda la clave ni las respuestas. Se envían los hechos de la jugada: la posición y las jugadas en notación de ajedrez, la clasificación y la línea del motor, la fase y la apertura, tu color, tu Elo aproximado (si importaste partidas con Elo), el idioma y el coach elegido; y, al terminar, estadísticas de la partida. No se envían tu nombre, tus nombres de usuario ni tus partidas completas. Ese proveedor trata los datos según sus propias condiciones, que aceptas tú al crear tu clave.</li>
+      <!--analytics:on-->
+      <li data-analytics><strong>Cloudflare Web Analytics</strong> (Cloudflare, Inc.): estadísticas agregadas de visitas, sin cookies (ver sección 7).</li>
+      <!--/analytics:on-->
+    </ul>
+    <p><strong>Transferencias internacionales.</strong> Cloudflare, Google, Microsoft y Polar están fuera de Ecuador (principalmente en Estados Unidos), por lo que crear una cuenta implica transferir tus datos de cuenta a esos países. La base de esa transferencia es tu <strong>consentimiento explícito</strong>, que das al marcar la casilla al crear la cuenta (LOPDP arts. 33 y 55 y siguientes; para usuarios de la UE, RGPD art. 49.1.a), además de los compromisos de protección de datos que cada proveedor publica (por ejemplo, su adhesión al Marco de Privacidad de Datos UE-EE. UU. o cláusulas contractuales tipo, cuando corresponda; RGPD arts. 45 y 46). Lichess, Chess.com y el proveedor de IA solo reciben datos cuando tú los usas, directamente desde tu navegador.</p>
+  </section>
+
+  <section id="cookies">
+    <h2>7. Cookies, almacenamiento local y analítica</h2>
+    <p>Sin cuenta, Escaque no pone cookies. Si inicias sesión se usan dos cookies propias, <strong>técnicamente necesarias</strong> y sin fines de seguimiento:</p>
+    <ul>
+      <li><code>__Host-escaque_sid</code>: mantiene tu sesión 30 días. HttpOnly, Secure, SameSite=Lax (no la puede leer JavaScript).</li>
+      <li><code>__Host-escaque_oidc</code>: temporal (10 minutos) mientras inicias sesión, como protección contra falsificaciones.</li>
+    </ul>
+    <p>No hay cookies de publicidad ni de terceros en Escaque (Google, Microsoft y Polar ponen las suyas en sus propias páginas).</p>
+    <p>El almacenamiento local del navegador (sección 3) es necesario para que la app funcione. Con cuenta, además: una copia de tu plan (<code>escaque:account</code>, sin el token de seguridad) para que Premium funcione sin conexión hasta 7 días, los precios de Polar (<code>escaque:products</code>, 24 horas) y, en IndexedDB, la fecha de la última modificación de cada registro (almacén <code>changes</code>), que solo se usa para sincronizar.</p>
+    <!--analytics:off-->
+    <p data-no-analytics>Esta versión no usa ninguna herramienta de analítica.</p>
+    <!--/analytics:off-->
+    <!--analytics:on-->
+    <div data-analytics hidden>
+      <p>Para saber cuántas visitas recibe y cuánto tarda en cargar, Escaque usa <strong>Cloudflare Web Analytics</strong>, que no usa cookies ni almacena datos en tu navegador y no crea un perfil de visitante. Recoge datos agregados de la visita (página, país aproximado, navegador, tiempos de carga). Si tu navegador o un bloqueador impiden ese script, la app funciona igual.</p>
+    </div>
+    <!--/analytics:on-->
+  </section>
+
+  <section id="derechos">
+    <h2>8. Tus derechos</h2>
+    <p>Tienes derecho a <strong>acceder</strong> a tus datos, <strong>rectificarlos</strong> y actualizarlos, <strong>eliminarlos</strong>, <strong>oponerte</strong> a su tratamiento, a su <strong>portabilidad</strong>, a la <strong>suspensión</strong> del tratamiento y a no ser objeto de decisiones basadas solo en valoraciones automatizadas (LOPDP arts. 13 a 20; RGPD arts. 15 a 22). También puedes <strong>retirar tu consentimiento</strong> en cualquier momento, sin que eso afecte a lo hecho antes: basta con borrar tu cuenta.</p>
+    <h3>Desde la app, al momento</h3>
+    <ul>
+      <li><strong>Acceso y portabilidad</strong>: tus datos están en tu navegador y los ves en la app (Mis partidas, Puzles, Progreso). Aún no hay un botón para exportarlo todo: si quieres una copia de lo que guarda el servidor (cuenta, plan y datos sincronizados), pídela por correo y te la enviaremos en un formato estructurado y de uso común (JSON).</li>
+      <li><strong>Rectificación</strong>: tu nombre visible y tu avatar se cambian en la app; el correo y el nombre de la cuenta se actualizan solos desde Google o Microsoft cada vez que inicias sesión.</li>
+      <li><strong>Eliminación de los datos sincronizados</strong>: ☰ → <strong>Tu Premium</strong> o <strong>Hazte Premium</strong> → «Borrar mis datos sincronizados del servidor» (los datos de este navegador se conservan).</li>
+      <li><strong>Eliminación de la cuenta</strong>: ☰ → «Borrar mi cuenta» (también en la pantalla Premium). Borra al momento tu usuario, tus sesiones, tu plan y tus datos sincronizados del servidor. No cancela una suscripción en Polar: cancélala antes en «Gestionar suscripción y facturas». Los registros de compra los conserva Polar por obligaciones fiscales.</li>
+      <li><strong>Datos del navegador</strong>: en Mis partidas, «Borrar todas»; en el coach, IA (opcional) → «Borrar clave»; o elimina los datos del sitio en la configuración de tu navegador (o desinstala la app).</li>
+    </ul>
+    <h3>Por correo</h3>
+    <p>Para cualquier derecho, escribe a <span class="contact">%CONTACT_EMAIL%</span> desde el correo de tu cuenta (o indicando cuál es, para comprobar que eres tú). Responderemos en un plazo máximo de <strong>15 días</strong> (LOPDP arts. 13 a 16; si vives en la UE, el RGPD art. 12 da como máximo un mes). El ejercicio de tus derechos es gratuito.</p>
+    <h3>Reclamar ante la autoridad</h3>
+    <p>Si crees que no hemos atendido bien tu solicitud, puedes presentar un reclamo ante la Autoridad de Protección de Datos Personales de Ecuador (la Superintendencia de Protección de Datos Personales). Si vives en la Unión Europea, puedes reclamar ante la autoridad de protección de datos de tu país (RGPD art. 77).</p>
+  </section>
+
+  <section id="menores">
+    <h2>9. Menores de edad</h2>
+    <ul>
+      <li>Escaque se puede usar <strong>sin cuenta a cualquier edad</strong>, porque sin cuenta no recogemos datos personales en nuestros servidores.</li>
+      <li>Para <strong>crear una cuenta</strong> hay que tener <strong>16 años o más</strong> (la casilla de consentimiento lo pide). Si sabemos que una cuenta es de alguien menor de 16 años, la borraremos; si eres madre, padre o representante y crees que es el caso, escríbenos.</li>
+      <li>Las <strong>compras</strong> requieren ser mayor de edad o contar con la autorización de tu representante legal.</li>
+    </ul>
+  </section>
+
+  <section id="seguridad">
+    <h2>10. Seguridad y vulneraciones</h2>
+    <p>Aplicamos medidas adecuadas al riesgo: todo el tráfico va cifrado (HTTPS); las cookies de sesión son HttpOnly, Secure y SameSite; la base guarda solo un hash de los tokens de sesión (si se filtrara, no servirían para entrar); las peticiones que modifican datos exigen un token anti-falsificación (CSRF); los secretos del servidor no están en el código; y guardamos el mínimo de datos necesario. Ningún sistema es infalible: si ocurriera una vulneración de seguridad que afecte a tus datos, la notificaremos a la Autoridad de Protección de Datos Personales (como máximo en 5 días, LOPDP art. 43) y, si supone un riesgo para tus derechos, también a ti sin dilación (como máximo en 3 días, LOPDP art. 46; RGPD arts. 33 y 34).</p>
+  </section>
+
+  <section id="cambios">
+    <h2>11. Cambios en esta política</h2>
+    <p>Si cambiamos esta política, publicaremos la nueva versión aquí con su número y su fecha. Si el cambio es sustancial, te avisaremos en la app antes de que entre en vigor y, si tienes cuenta, te pediremos que aceptes la nueva versión para seguir usando la sincronización y las compras; si no estás de acuerdo, puedes borrar tu cuenta.</p>
+  </section>
+
+  <section id="contacto">
+    <h2>12. Contacto</h2>
+    <p>Escaque · Quito, Ecuador · <span class="contact">%CONTACT_EMAIL%</span>.</p>
+  </section>
+
+</main>
+</body>
+</html>

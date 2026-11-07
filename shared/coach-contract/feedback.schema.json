@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coach-feedback-v1",
+  "title": "CoachFeedback (docs/COACH_DESIGN.md §5.1)",
+  "type": "object",
+  "properties": {
+    "comment": {
+      "type": "string",
+      "description": "1–2 oraciones, máx. 280 caracteres. Jugadas entre [[ ]]. Vacío en hint."
+    },
+    "tone": {
+      "type": "string",
+      "enum": [
+        "elogio",
+        "neutral",
+        "advertencia",
+        "alerta"
+      ]
+    },
+    "suggestTakeback": {
+      "type": "boolean",
+      "description": "Debe ser igual a policy.offerTakeback."
+    },
+    "hint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Solo en requestType=hint. Sin la jugada ni su casilla de destino."
+    },
+    "question": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Pregunta breve que haga pensar, respondible con los hechos."
+    },
+    "concepts": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "enum": [
+          "piezas_sin_defensa",
+          "ataque_doble",
+          "clavada",
+          "jaque",
+          "mate",
+          "material",
+          "desarrollo",
+          "seguridad_del_rey",
+          "centro",
+          "actividad",
+          "estructura_de_peones",
+          "final",
+          "apertura",
+          "tiempo"
+        ]
+      }
+    },
+    "factsUsed": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "string"
+      }
+    },
+    "why": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "v1.1: explicación del \"¿Por qué?\" cuando policy.explainWhy (2–3 oraciones, máx. 420 caracteres)."
+    }
+  },
+  "required": [
+    "comment",
+    "tone",
+    "suggestTakeback",
+    "hint",
+    "question",
+    "concepts",
+    "factsUsed"
+  ],
+  "additionalProperties": false
+}

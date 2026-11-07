@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="alternate" hreflang="es" href="/privacidad.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Privacy policy · Escaque</title>
+<style>
+  :root { --bg:#faf6f0; --fg:#2b2420; --muted:#6b5f57; --link:#b4532a; --card:#fff; --line:#e7ded3; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14110e; --fg:#efe7de; --muted:#b3a597; --link:#e58a5f; --card:#1d1915; --line:#3a322b; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.6rem; margin:0 0 4px; } h2 { font-size:1.15rem; margin:32px 0 8px; } h3 { font-size:1rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--link); overflow-wrap:anywhere; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 20px; margin-top:16px; }
+  section h2 { margin-top:0; }
+  code { font-size:.9em; overflow-wrap:anywhere; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy policy</h1>
+  <p class="muted"><a href="/">← Back to Escaque</a> · <a href="/privacidad.html" hreflang="es" lang="es">Español</a> · <a href="/terms.html">Terms of use</a></p>
+  <p class="muted" data-legal-version="1.0">Version 1.0 · Effective from 7 November 2026.</p>
+  <p class="muted">This is a translation. If the Spanish and English versions differ, the Spanish version (<a href="/privacidad.html" hreflang="es" lang="es">Política de privacidad</a>) prevails, without prejudice to the rights the law of your country grants you.</p>
+
+  <section id="controller">
+    <h2>1. Who is the controller</h2>
+    <p>The controller of personal data and owner of the Escaque service is <strong><span class="controller">%CONTROLLER%</span></strong>, an individual based in Quito, Ecuador.</p>
+    <p>Contact for any privacy question and to exercise your rights: <span class="contact">%CONTACT_EMAIL%</span>.</p>
+    <p>This policy is governed by Ecuador's Organic Law on Personal Data Protection (LOPDP, Fifth Supplement of the Official Register 459, 26 May 2021). If you live in the European Union, we also inform you under the General Data Protection Regulation (GDPR, Regulation (EU) 2016/679).</p>
+  </section>
+
+  <section>
+    <h2>2. Summary</h2>
+    <ul>
+      <li><strong>Without an account, Escaque does not store your personal data on its servers.</strong> Your games, progress, rewards, preferences and, if you add one, your AI key stay in your browser.</li>
+      <li>The <strong>account is optional</strong> (with Google or Microsoft), only for people aged 16 or over, and is only used for Premium and to sync your data across devices. When you create it you give your explicit consent to what this policy explains.</li>
+      <li>The app only talks to other services when you ask it to: importing games (Lichess, Chess.com), using the optional AI with your own key, signing in (Google, Microsoft) or buying Premium (Polar).</li>
+      <li>No ads, no commercial profiling and no third-party cookies. We do not sell or hand over your data.</li>
+      <li>You can delete your account and all your data on the server from the app, at any time.</li>
+    </ul>
+  </section>
+
+  <section id="browser">
+    <h2>3. Without an account: everything stays in your browser</h2>
+    <p>The following is stored only in your browser's storage (IndexedDB, <code>localStorage</code> and <code>sessionStorage</code>) on your device. It is not sent to Escaque:</p>
+    <ul>
+      <li>The games you import or play in Training, their analyses, the moves, the puzzles generated from them and your progress.</li>
+      <li>Your rewards: experience (XP) and level, streak and daily goal, and achievements.</li>
+      <li>Preferences: language, light/dark theme, sound, board, chosen coach and rival, your display name and avatar, and whether you have seen the welcome screen.</li>
+      <li>The Lichess or Chess.com usernames you link for importing.</li>
+      <li>The optional AI settings. The <strong>key</strong> is stored in this browser only if you tick "Remember the key on this device"; otherwise it only lives in memory until you reload. AI comments are kept for a while in <code>sessionStorage</code> so they are not requested twice. <strong>The key is never synced or sent to Escaque.</strong></li>
+      <li>A copy of the app files (including the Stockfish engine, about 7 MB) so it works offline and loads faster.</li>
+    </ul>
+    <p>Stockfish, the chess engine, runs on your device: the positions it analyzes never leave it.</p>
+    <p><strong>Technical connection data.</strong> Like any website, when serving you the app our hosting provider (Cloudflare) receives technical data from each request, such as your IP address, your browser and the requested address. The app calls <code>/api/me</code> when it opens (to check whether you are signed in) and, to prevent abuse, some routes count requests per IP address or per user without storing them. Requests to <code>/api</code> are kept in Cloudflare's technical logs for a few days (3 on the free plan, 7 at most). We do not use this data to identify you or for anything other than running and securing the service.</p>
+  </section>
+
+  <section id="account">
+    <h2>4. If you create an account</h2>
+    <p>Signing in is optional and requires being <strong>16 or older</strong>. Before your first sign-in we ask you to tick a box accepting the <a href="/terms.html">Terms of use</a> and this policy, including the transfer of your data to the providers listed outside Ecuador (section 6). Without that box no account is created.</p>
+    <h3>What data the Escaque server stores</h3>
+    <p>The server (Cloudflare Workers and the Cloudflare D1 database) stores:</p>
+    <ul>
+      <li><strong>Email address and display name</strong> assigned to you by Google or Microsoft (if the provider supplies them).</li>
+      <li><strong>Your account identifier at the provider</strong> (the identifier Google or Microsoft gives Escaque) and which provider you used. We do not store passwords or Google/Microsoft tokens: they are only used for a moment to verify your identity.</li>
+      <li><strong>Record of your consent</strong>: the version of the terms and of this policy you accepted, and the date.</li>
+      <li><strong>Sessions</strong>: only a cryptographic summary (hash) of the cookie token, its creation date, its expiry and its last use (recorded at most once a day). At most 10 sessions per person.</li>
+      <li><strong>Plan and subscription status</strong>: monthly, yearly or Founder; active, canceled, past due, expired or refunded; end of the paid period; and the customer and subscription or order identifiers at Polar.</li>
+      <li><strong>Synced data</strong>, only if you have Premium (section 5).</li>
+      <li><strong>Log of Polar notifications</strong> already processed (notification identifier, type and date), so they are not processed twice.</li>
+    </ul>
+    <h3>Purposes and legal bases</h3>
+    <ul>
+      <li>Creating and keeping your account, recognizing you when you come back and showing your plan: <strong>your explicit consent</strong>, given by ticking the box (LOPDP arts. 7 and 8; GDPR art. 6(1)(a)).</li>
+      <li>Providing the Premium and sync service you purchase, and handling payment with Polar: <strong>performance of the contract</strong> (LOPDP art. 7; GDPR art. 6(1)(b)).</li>
+      <li>Protecting the service against abuse (request limits, technical logs): <strong>legitimate interest</strong> in the security of the service (LOPDP art. 7; GDPR art. 6(1)(f)).</li>
+    </ul>
+    <p>We do not make automated decisions that produce legal effects on you, and we do not build profiles.</p>
+    <h3 id="retention">How long data is kept</h3>
+    <ul>
+      <li><strong>Account, consent record and plan</strong>: while the account exists. When you delete it, they are removed immediately.</li>
+      <li><strong>Sessions</strong>: they expire after 30 days or when you sign out; expired ones are removed from the database in the next automatic cleanup.</li>
+      <li><strong>Synced data</strong>: until you delete it or delete your account. If you stop having Premium, the copy is kept (so you get it back if you return) and you can still delete it whenever you want.</li>
+      <li><strong>Processed Polar notifications</strong>: 30 days.</li>
+      <li><strong>Cloudflare technical logs</strong>: a few days (3 on the free plan, 7 at most).</li>
+      <li><strong>Backups</strong>: the database has a restore feature (Cloudflare D1 Time Travel) that keeps its history for some days (7 on the free plan, 30 at most). What you delete disappears from it when that period ends; we would only use it to recover the service after a failure.</li>
+      <li><strong>Purchase records</strong> are kept by Polar as merchant of record, for the periods required by tax law.</li>
+    </ul>
+  </section>
+
+  <section id="sync">
+    <h2>5. Synced data (Premium only)</h2>
+    <p>If you have Premium, the app uploads a copy of your data to the Escaque server so you have it on all your devices: games (PGN, opponents, Elo and dates), engine analyses, moves from Training games, puzzles and their progress (results, puzzle Elo and spaced repetition), rewards (XP, streaks, daily goal and achievements), linked Lichess or Chess.com accounts and import markers, your profile (display name and avatar) and your coach, board and rival-voice preferences.</p>
+    <p><strong>Not synced</strong>: your AI key, the AI settings, the light/dark theme, the language and the sound. When you delete something that was synced, a minimal deletion marker (without the content) stays on the server so your other devices delete it too. There are technical limits on space (25 MB) and on daily changes per person.</p>
+  </section>
+
+  <section id="third-parties">
+    <h2>6. Who data is shared with and international transfers</h2>
+    <p>We do not sell your data or use it for advertising. Only these providers are involved, each for the stated purpose:</p>
+    <ul>
+      <li><strong>Cloudflare, Inc.</strong> (United States, global network) — processor: hosts the app, runs the server (Workers) and stores the database (D1) with the account data. <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare privacy policy</a>.</li>
+      <li><strong>Google LLC</strong> (United States) and <strong>Microsoft Corporation</strong> (United States), only if you choose to sign in with them: they receive the sign-in request and send us your name, your email and an identifier. Their own policies and cookies apply on their pages (<a href="https://policies.google.com/privacy" rel="noopener">Google</a>, <a href="https://privacy.microsoft.com/privacystatement" rel="noopener">Microsoft</a>).</li>
+      <li><strong>Polar Software, Inc.</strong> (United States), only if you buy Premium or manage your subscription. Polar is the <strong>merchant of record</strong> for purchases: we send it your internal Escaque identifier and your email, and Polar processes payment data (card, country, taxes and billing) on its own behalf, as controller, under its <a href="https://polar.sh/legal/privacy-policy" rel="noopener">privacy policy</a>. Polar uses Stripe to process payments. <strong>Escaque never sees or stores card data.</strong></li>
+      <li><strong>Lichess</strong> (<code>lichess.org</code>), only if you import from Lichess: your browser requests the public games of the username you type directly from Lichess.</li>
+      <li><strong>Chess.com</strong> (<code>api.chess.com</code>), only if you import from Chess.com: your browser requests the public games of the username you type. If the browser cannot read the response directly, the request goes through an Escaque relay (<code>/api/proxy/chesscom</code>) that only forwards that public query, without your browser's cookies or other headers, and stores nothing; the URL includes the username and Cloudflare may keep the public response in its cache for a few minutes.</li>
+      <li><strong>The AI provider you choose</strong> (Google Gemini, OpenAI, Anthropic, OpenRouter or a compatible server you specify), only if you turn on the AI with <strong>your own key</strong>. Your browser calls the provider directly; Escaque never receives or stores the key or the replies. What is sent are the facts of the move: the position and the moves in chess notation, the engine's classification and line, the phase and the opening, your color, your approximate Elo (if you imported games with Elo), the language and the chosen coach; and, at the end, game statistics. Your name, your usernames and your full games are not sent. That provider processes the data under its own terms, which you accept when you create your key.</li>
+      <!--analytics:on-->
+      <li data-analytics><strong>Cloudflare Web Analytics</strong> (Cloudflare, Inc.): aggregated visit statistics, without cookies (see section 7).</li>
+      <!--/analytics:on-->
+    </ul>
+    <p><strong>International transfers.</strong> Cloudflare, Google, Microsoft and Polar are outside Ecuador (mainly in the United States), so creating an account means transferring your account data to those countries. The basis for that transfer is your <strong>explicit consent</strong>, given by ticking the box when you create the account (LOPDP arts. 33 and 55 onwards; for EU users, GDPR art. 49(1)(a)), together with the data protection commitments each provider publishes (for example, its participation in the EU-U.S. Data Privacy Framework or standard contractual clauses, where applicable; GDPR arts. 45 and 46). Lichess, Chess.com and the AI provider only receive data when you use them, directly from your browser.</p>
+  </section>
+
+  <section id="cookies">
+    <h2>7. Cookies, local storage and analytics</h2>
+    <p>Without an account, Escaque sets no cookies. If you sign in, two first-party cookies are used. They are <strong>strictly necessary</strong> and not used for tracking:</p>
+    <ul>
+      <li><code>__Host-escaque_sid</code>: keeps you signed in for 30 days. HttpOnly, Secure, SameSite=Lax (JavaScript cannot read it).</li>
+      <li><code>__Host-escaque_oidc</code>: temporary (10 minutes) while you sign in, as protection against forgery.</li>
+    </ul>
+    <p>There are no advertising or third-party cookies in Escaque (Google, Microsoft and Polar set their own on their own pages).</p>
+    <p>The browser's local storage (section 3) is needed for the app to work. With an account, also: a copy of your plan (<code>escaque:account</code>, without the security token) so Premium works offline for up to 7 days, Polar's prices (<code>escaque:products</code>, 24 hours) and, in IndexedDB, the last-modified date of each record (<code>changes</code> store), used only for syncing.</p>
+    <!--analytics:off-->
+    <p data-no-analytics>This version does not use any analytics tool.</p>
+    <!--/analytics:off-->
+    <!--analytics:on-->
+    <div data-analytics hidden>
+      <p>To know how many visits it gets and how long it takes to load, Escaque uses <strong>Cloudflare Web Analytics</strong>, which uses no cookies, stores nothing in your browser and does not build a visitor profile. It collects aggregated visit data (page, approximate country, browser, load times). If your browser or a blocker prevents that script, the app works the same.</p>
+    </div>
+    <!--/analytics:on-->
+  </section>
+
+  <section id="rights">
+    <h2>8. Your rights</h2>
+    <p>You have the right to <strong>access</strong> your data, <strong>rectify</strong> and update it, <strong>erase</strong> it, <strong>object</strong> to its processing, to its <strong>portability</strong>, to <strong>restriction (suspension)</strong> of processing and not to be subject to decisions based solely on automated processing (LOPDP arts. 13 to 20; GDPR arts. 15 to 22). You can also <strong>withdraw your consent</strong> at any time, without affecting what was done before: just delete your account.</p>
+    <h3>From the app, immediately</h3>
+    <ul>
+      <li><strong>Access and portability</strong>: your data is in your browser and you can see it in the app (My games, Puzzles, Progress). There is no button to export everything yet: if you want a copy of what the server stores (account, plan and synced data), ask by email and we will send it in a structured, commonly used format (JSON).</li>
+      <li><strong>Rectification</strong>: you can change your display name and avatar in the app; your account email and name update automatically from Google or Microsoft every time you sign in.</li>
+      <li><strong>Erasure of synced data</strong>: ☰ → <strong>Your Premium</strong> or <strong>Go Premium</strong> → "Delete my synced data from the server" (the data in this browser is kept).</li>
+      <li><strong>Erasure of the account</strong>: ☰ → "Delete my account" (also on the Premium screen). It immediately deletes your user, sessions, plan and synced data from the server. It does not cancel a subscription in Polar: cancel it first in "Manage subscription and invoices". Purchase records are kept by Polar for tax obligations.</li>
+      <li><strong>Browser data</strong>: in My games, "Delete all"; in the coach, AI (optional) → "Delete key"; or clear the site data in your browser settings (or uninstall the app).</li>
+    </ul>
+    <h3>By email</h3>
+    <p>For any right, write to <span class="contact">%CONTACT_EMAIL%</span> from your account email (or telling us which one it is, so we can check it is you). We will answer within <strong>15 days</strong> at most (LOPDP arts. 13 to 16; if you live in the EU, GDPR art. 12 allows one month at most). Exercising your rights is free.</p>
+    <h3>Complaints to the authority</h3>
+    <p>If you think we have not handled your request properly, you can file a complaint with Ecuador's Personal Data Protection Authority (the Superintendencia de Protección de Datos Personales). If you live in the European Union, you can complain to the data protection authority of your country (GDPR art. 77).</p>
+  </section>
+
+  <section id="minors">
+    <h2>9. Minors</h2>
+    <ul>
+      <li>Escaque can be used <strong>without an account at any age</strong>, because without an account we do not collect personal data on our servers.</li>
+      <li>To <strong>create an account</strong> you must be <strong>16 or older</strong> (the consent box asks for it). If we learn that an account belongs to someone under 16, we will delete it; if you are a parent or guardian and think this is the case, write to us.</li>
+      <li><strong>Purchases</strong> require being of legal age or having your legal guardian's authorization.</li>
+    </ul>
+  </section>
+
+  <section id="security">
+    <h2>10. Security and breaches</h2>
+    <p>We apply measures suited to the risk: all traffic is encrypted (HTTPS); session cookies are HttpOnly, Secure and SameSite; the database stores only a hash of session tokens (if it leaked, they would not let anyone in); requests that change data require an anti-forgery (CSRF) token; server secrets are not in the code; and we keep the minimum data needed. No system is infallible: if a security breach affecting your data occurred, we would notify the Personal Data Protection Authority (within 5 days at most, LOPDP art. 43) and, if it poses a risk to your rights, you as well without delay (within 3 days at most, LOPDP art. 46; GDPR arts. 33 and 34).</p>
+  </section>
+
+  <section id="changes">
+    <h2>11. Changes to this policy</h2>
+    <p>If we change this policy, we will publish the new version here with its number and date. If the change is substantial, we will let you know in the app before it takes effect and, if you have an account, we will ask you to accept the new version to keep using sync and purchases; if you do not agree, you can delete your account.</p>
+  </section>
+
+  <section id="contact">
+    <h2>12. Contact</h2>
+    <p>Escaque · Quito, Ecuador · <span class="contact">%CONTACT_EMAIL%</span>.</p>
+  </section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Normaliza finales de línea a LF en el repositorio y en el working tree
+# (evita diffs inflados por CRLF al trabajar en Windows).
+* text=auto eol=lf
+
+# Binarios: sin conversión de finales de línea ni diff de texto
+*.wasm binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+
+# SVG es texto (XML): se normaliza a LF pero sí se puede diffear
+*.svg text eol=lf

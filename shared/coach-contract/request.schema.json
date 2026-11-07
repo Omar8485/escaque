@@ -1,0 +1,1059 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coach-request-v1",
+  "title": "CoachRequest (schemaVersion 1, docs/COACH_DESIGN.md §4.4)",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "promptVersion": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "requestType": {
+      "type": "string",
+      "enum": [
+        "move_feedback",
+        "hint",
+        "why",
+        "game_summary"
+      ]
+    },
+    "locale": {
+      "type": "string",
+      "enum": ["es", "en"]
+    },
+    "player": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "enum": [
+            "w",
+            "b"
+          ]
+        },
+        "rating": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 4000
+        }
+      },
+      "required": [
+        "color",
+        "rating"
+      ],
+      "additionalProperties": false
+    },
+    "rival": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "level",
+        "label"
+      ],
+      "additionalProperties": false
+    },
+    "game": {
+      "type": "object",
+      "properties": {
+        "ply": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "moveNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "apertura",
+            "medio juego",
+            "final"
+          ]
+        },
+        "opening": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 120
+            },
+            "inBook": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "inBook"
+          ],
+          "additionalProperties": false
+        },
+        "materialBalance": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "ply",
+        "moveNumber",
+        "phase",
+        "opening",
+        "materialBalance"
+      ],
+      "additionalProperties": false
+    },
+    "lastRivalMove": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "san": {
+          "type": "string",
+          "maxLength": 12
+        },
+        "piece": {
+          "type": "string",
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        },
+        "to": {
+          "type": "string",
+          "maxLength": 2
+        },
+        "capture": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        }
+      },
+      "required": [
+        "san",
+        "piece",
+        "to",
+        "capture"
+      ],
+      "additionalProperties": false
+    },
+    "classification": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": [
+            "Best",
+            "Excellent",
+            "Good",
+            "Inaccuracy",
+            "Mistake",
+            "Blunder"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "w",
+            "b"
+          ]
+        },
+        "moveUci": {
+          "type": "string",
+          "maxLength": 5
+        },
+        "moveSan": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 12
+        },
+        "evalBefore": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "cp",
+                "mate"
+              ]
+            },
+            "value": {
+              "type": "integer"
+            },
+            "winner": {
+              "type": "string",
+              "enum": [
+                "w",
+                "b"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        "evalAfter": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "cp",
+                "mate"
+              ]
+            },
+            "value": {
+              "type": "integer"
+            },
+            "winner": {
+              "type": "string",
+              "enum": [
+                "w",
+                "b"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        "winBefore": {
+          "type": "number"
+        },
+        "winAfter": {
+          "type": "number"
+        },
+        "loss": {
+          "type": "number"
+        },
+        "isBest": {
+          "type": "boolean"
+        },
+        "bestMoveSan": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 12
+        },
+        "pvSan": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "maxLength": 12
+          }
+        },
+        "depthBefore": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "depthAfter": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "label",
+        "color",
+        "moveUci",
+        "moveSan",
+        "evalBefore",
+        "evalAfter",
+        "winBefore",
+        "winAfter",
+        "loss",
+        "isBest",
+        "bestMoveSan",
+        "pvSan",
+        "depthBefore",
+        "depthAfter"
+      ],
+      "additionalProperties": false
+    },
+    "moveDetails": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "piece": {
+          "type": "string",
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        },
+        "from": {
+          "type": "string",
+          "maxLength": 2
+        },
+        "to": {
+          "type": "string",
+          "maxLength": 2
+        },
+        "capture": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        },
+        "check": {
+          "type": "boolean"
+        },
+        "castle": {
+          "type": "boolean"
+        },
+        "promotion": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        }
+      },
+      "required": [
+        "piece",
+        "from",
+        "to",
+        "capture",
+        "check",
+        "castle",
+        "promotion"
+      ],
+      "additionalProperties": false
+    },
+    "coachFacts": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "greatMove": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "playedRank": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "stillWinning": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "mateAllowed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "mateMissed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "evalLabelBefore": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "ganando",
+            "ventaja clara",
+            "ligera ventaja",
+            "igualdad",
+            "ligera desventaja",
+            "desventaja clara",
+            "perdiendo"
+          ]
+        },
+        "evalLabelAfter": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "ganando",
+            "ventaja clara",
+            "ligera ventaja",
+            "igualdad",
+            "ligera desventaja",
+            "desventaja clara",
+            "perdiendo"
+          ]
+        }
+      },
+      "required": [
+        "greatMove",
+        "playedRank",
+        "stillWinning",
+        "mateAllowed",
+        "mateMissed",
+        "evalLabelBefore",
+        "evalLabelAfter"
+      ],
+      "additionalProperties": false
+    },
+    "refutation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "san": {
+          "type": "string",
+          "maxLength": 12
+        },
+        "piece": {
+          "type": "string",
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        },
+        "to": {
+          "type": "string",
+          "maxLength": 2
+        },
+        "check": {
+          "type": "boolean"
+        },
+        "captures": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        },
+        "motif": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "mate",
+            "jaque_y_ataque",
+            "ataque_doble",
+            "captura"
+          ]
+        },
+        "mateIn": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "targets": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "properties": {
+              "square": {
+                "type": "string",
+                "maxLength": 2
+              },
+              "piece": {
+                "type": "string",
+                "enum": [
+                  "p",
+                  "n",
+                  "b",
+                  "r",
+                  "q",
+                  "k"
+                ]
+              },
+              "defended": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "square",
+              "piece",
+              "defended"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "san",
+        "piece",
+        "to",
+        "check",
+        "captures",
+        "motif",
+        "mateIn",
+        "targets"
+      ],
+      "additionalProperties": false
+    },
+    "hanging": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "properties": {
+          "square": {
+            "type": "string",
+            "maxLength": 2
+          },
+          "piece": {
+            "type": "string",
+            "enum": [
+              "p",
+              "n",
+              "b",
+              "r",
+              "q",
+              "k"
+            ]
+          },
+          "defended": {
+            "type": "boolean"
+          },
+          "confirmedByEngine": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "square",
+          "piece",
+          "defended",
+          "confirmedByEngine"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "opponentLoose": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "properties": {
+          "square": {
+            "type": "string",
+            "maxLength": 2
+          },
+          "piece": {
+            "type": "string",
+            "enum": [
+              "p",
+              "n",
+              "b",
+              "r",
+              "q",
+              "k"
+            ]
+          }
+        },
+        "required": [
+          "square",
+          "piece"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "hintFacts": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "motif": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "mate",
+            "jaque_y_ataque",
+            "ataque_doble",
+            "captura"
+          ]
+        },
+        "bestPiece": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "p",
+            "n",
+            "b",
+            "r",
+            "q",
+            "k"
+          ]
+        },
+        "bestFrom": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2
+        }
+      },
+      "required": [
+        "motif",
+        "bestPiece",
+        "bestFrom"
+      ],
+      "additionalProperties": false
+    },
+    "history": {
+      "type": "object",
+      "properties": {
+        "recentLabels": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Best",
+              "Excellent",
+              "Good",
+              "Inaccuracy",
+              "Mistake",
+              "Blunder"
+            ]
+          }
+        },
+        "repeatedMotif": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "mate",
+            "jaque_y_ataque",
+            "ataque_doble",
+            "captura"
+          ]
+        },
+        "takebacks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hintsUsed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "recentLabels",
+        "repeatedMotif",
+        "takebacks",
+        "hintsUsed"
+      ],
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "offerTakeback": {
+          "type": "boolean"
+        },
+        "revealBestMove": {
+          "type": "boolean"
+        },
+        "showNumbers": {
+          "type": "boolean"
+        },
+        "hintLevel": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 3
+        },
+        "explainWhy": {
+          "type": "boolean",
+          "description": "v1.1: la respuesta de move_feedback incluye también el \"¿Por qué?\" (campo why)."
+        }
+      },
+      "required": [
+        "offerTakeback",
+        "revealBestMove",
+        "showNumbers",
+        "hintLevel"
+      ],
+      "additionalProperties": false
+    },
+    "allowedMoves": {
+      "type": "array",
+      "maxItems": 40,
+      "items": {
+        "type": "string",
+        "maxLength": 12
+      }
+    },
+    "allowedSquares": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "string",
+        "maxLength": 2
+      }
+    },
+    "userQuestion": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 300
+    },
+    "summary": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "result": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "accuracy": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "Best": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "Excellent": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "Good": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "Inaccuracy": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "Mistake": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "Blunder": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "Best",
+            "Excellent",
+            "Good",
+            "Inaccuracy",
+            "Mistake",
+            "Blunder"
+          ],
+          "additionalProperties": false
+        },
+        "greatMoves": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "keyMoments": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "properties": {
+              "ply": {
+                "type": "integer"
+              },
+              "moveSan": {
+                "type": "string",
+                "maxLength": 12
+              },
+              "label": {
+                "type": "string",
+                "enum": [
+                  "Best",
+                  "Excellent",
+                  "Good",
+                  "Inaccuracy",
+                  "Mistake",
+                  "Blunder"
+                ]
+              },
+              "motif": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "mate",
+                  "jaque_y_ataque",
+                  "ataque_doble",
+                  "captura"
+                ]
+              },
+              "evalLabelBefore": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ganando",
+                  "ventaja clara",
+                  "ligera ventaja",
+                  "igualdad",
+                  "ligera desventaja",
+                  "desventaja clara",
+                  "perdiendo"
+                ]
+              },
+              "evalLabelAfter": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "ganando",
+                  "ventaja clara",
+                  "ligera ventaja",
+                  "igualdad",
+                  "ligera desventaja",
+                  "desventaja clara",
+                  "perdiendo"
+                ]
+              },
+              "bestMoveSan": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 12
+              }
+            },
+            "required": [
+              "ply",
+              "moveSan",
+              "label",
+              "motif",
+              "evalLabelBefore",
+              "evalLabelAfter",
+              "bestMoveSan"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "result",
+        "accuracy",
+        "counts",
+        "greatMoves",
+        "keyMoments"
+      ],
+      "additionalProperties": false
+    },
+    "coach": {
+      "type": "string",
+      "enum": [
+        "alfred",
+        "kairos",
+        "ariadna"
+      ]
+    },
+    "refutationLine": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "v1.1: línea de refutación de Stockfish (PV del rival tras la jugada), 1–8 plies en SAN, y lo que gana el rival.",
+      "properties": {
+        "san": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "maxLength": 12
+          }
+        },
+        "startMoveNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mate": {
+          "type": "boolean"
+        },
+        "mateIn": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "materialSwing": {
+          "type": "integer"
+        },
+        "playerLost": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": [
+              "p",
+              "n",
+              "b",
+              "r",
+              "q",
+              "k"
+            ]
+          }
+        },
+        "rivalLost": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": [
+              "p",
+              "n",
+              "b",
+              "r",
+              "q",
+              "k"
+            ]
+          }
+        }
+      },
+      "required": [
+        "san",
+        "startMoveNumber",
+        "mate",
+        "mateIn",
+        "materialSwing",
+        "playerLost",
+        "rivalLost"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "promptVersion",
+    "requestType",
+    "locale",
+    "player",
+    "rival",
+    "game",
+    "lastRivalMove",
+    "classification",
+    "moveDetails",
+    "coachFacts",
+    "refutation",
+    "hanging",
+    "opponentLoose",
+    "hintFacts",
+    "history",
+    "policy",
+    "allowedMoves",
+    "allowedSquares",
+    "userQuestion"
+  ],
+  "additionalProperties": false
+}
