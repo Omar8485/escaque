@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Barra del navegador / ventana instalada: crema en claro, café en oscuro (useTheme.js la cambia). -->
+    <meta name="theme-color" content="#faf6f0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Escaque" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <!-- Título y descripción en español; src/seo/documentMeta.js los cambia al idioma de la app.
+         %SITE_URL% lo sustituye el build (src/appInfo.js / VITE_SITE_URL; build-tools/site.js). -->
+    <title>Escaque — entrenador de ajedrez para PC con coach</title>
+    <meta name="description" content="Entrenador de ajedrez para PC: coach, 10 rivales con personalidad y puzles de tus errores. Importa de Lichess o Chess.com. Gratis y sin cuenta." />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Escaque" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:title" content="Escaque — entrenador de ajedrez para PC con coach" />
+    <meta property="og:description" content="Entrenador de ajedrez para PC: coach, 10 rivales con personalidad y puzles de tus errores. Importa de Lichess o Chess.com. Gratis y sin cuenta." />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Escaque: entrena ajedrez para PC con un coach" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Escaque — entrenador de ajedrez para PC con coach" />
+    <meta name="twitter:description" content="Entrenador de ajedrez para PC: coach, 10 rivales con personalidad y puzles de tus errores. Importa de Lichess o Chess.com. Gratis y sin cuenta." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+    <!-- Datos estructurados para buscadores (sin valoraciones inventadas). -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Escaque",
+        "url": "%SITE_URL%/",
+        "image": "%SITE_URL%/og-image.png",
+        "description": "Entrenador de ajedrez para PC: un coach te detiene en tus errores y te los explica, 10 rivales con personalidad y puzles de tus propias partidas de Lichess o Chess.com. / Chess trainer for PC: a coach stops you at your mistakes and explains them, 10 rivals with personality and puzzles from your own Lichess or Chess.com games.",
+        "applicationCategory": "GameApplication",
+        "applicationSubCategory": "Chess training",
+        "operatingSystem": "Windows, macOS, Linux, ChromeOS",
+        "browserRequirements": "Requires JavaScript and WebAssembly",
+        "inLanguage": ["es", "en"],
+        "isAccessibleForFree": true,
+        "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+        "codeRepository": "https://github.com/Omar8485/escaque",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+    <!-- Presentación estática dentro de #root: la ven los rastreadores que no ejecutan JS y quien
+         espera a que cargue la app; React la sustituye al montar (src/main.jsx). -->
+    <style>
+      .boot { max-width: 640px; margin: 0 auto; padding: 18vh 20px 40px; text-align: center; font: 17px/1.6 system-ui, sans-serif; color: #2b2420; }
+      .boot h1 { font-size: 2rem; margin: 0 0 12px; }
+      .boot a { color: #b4532a; }
+      .dark .boot { color: #efe7de; }
+      .dark .boot a { color: #e58a5f; }
+      html.dark { background: #14110e; }
+      html[lang='en'] .boot [lang='es'], html[lang='es'] .boot [lang='en'] { display: none; }
+    </style>
+    <script>
+      // Aplica el tema guardado antes de pintar (evita el parpadeo claro → oscuro). Ver useTheme.js.
+      try {
+        if (localStorage.getItem('coach-chess:theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#14110e');
+        }
+      } catch (e) {}
+      // Idioma antes de pintar (<html lang>): elección guardada o el navegador; ver src/i18n/core.js.
+      try {
+        var l = null;
+        try { l = localStorage.getItem('escaque:lang'); } catch (e) {}
+        if (l !== 'es' && l !== 'en') {
+          l = 'en';
+          var ls = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+          for (var i = 0; i < ls.length; i++) {
+            var b = String(ls[i] || '').toLowerCase().split(/[-_]/)[0];
+            if (b === 'es' || b === 'en') { l = b; break; }
+          }
+        }
+        document.documentElement.lang = l;
+        // Manifiesto en el idioma de la app (ver src/seo/documentMeta.js).
+        if (l === 'en') document.querySelector('link[rel="manifest"]').setAttribute('href', '/manifest.en.webmanifest');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <main class="boot">
+        <h1>Escaque</h1>
+        <p lang="es">Entrenador de ajedrez para PC, gratis y de código abierto: un coach te detiene en tus errores y te los explica, juegas contra 10 rivales con personalidad y entrenas con puzles sacados de tus propias partidas de Lichess o Chess.com.</p>
+        <p lang="en">A free, open-source chess trainer for PC: a coach stops you at your mistakes and explains them, you play 10 rivals with personality and you train with puzzles made from your own Lichess or Chess.com games.</p>
+        <p lang="es"><a href="/acerca">Qué es Escaque y cómo funciona</a></p>
+        <p lang="en"><a href="/about">What Escaque is and how it works</a></p>
+        <noscript><p>Escaque necesita JavaScript. / Escaque needs JavaScript.</p></noscript>
+      </main>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

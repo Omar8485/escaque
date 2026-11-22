@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Escaque — a free chess trainer with a coach, for PC</title>
+<meta name="description" content="Escaque is a free, open-source chess trainer for PC: a coach stops you at your mistakes and explains them, you play 10 rivals, and you train with puzzles made from your own Lichess or Chess.com games.">
+<link rel="canonical" href="%SITE_URL%/about">
+<link rel="alternate" hreflang="es" href="%SITE_URL%/acerca">
+<link rel="alternate" hreflang="en" href="%SITE_URL%/about">
+<link rel="alternate" hreflang="x-default" href="%SITE_URL%/about">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Escaque">
+<meta property="og:url" content="%SITE_URL%/about">
+<meta property="og:title" content="Escaque — a free chess trainer with a coach, for PC">
+<meta property="og:description" content="A coach stops you at your mistakes and explains them. 10 rivals with personality and puzzles from your own games. Free, no account, open source.">
+<meta property="og:image" content="%SITE_URL%/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[
+{"@type":"Question","name":"Is Escaque free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Playing every rival with the coach is free and unlimited, and you don't need an account. There is an optional Premium plan (full history and progress, sync across devices, extra themes) that supports the project. There are no ads."}},
+{"@type":"Question","name":"Do I need to install anything or sign up?","acceptedAnswer":{"@type":"Answer","text":"No. Escaque runs in your PC's browser and can also be installed as an app (PWA). An account is optional and only needed for Premium and sync."}},
+{"@type":"Question","name":"Does it work on phones?","acceptedAnswer":{"@type":"Answer","text":"Escaque is built for PC. It may work on mid-to-high-end phones and tablets, but that is not guaranteed: analysis uses the same Stockfish depth on every device, which needs capable hardware."}},
+{"@type":"Question","name":"Does it use AI?","acceptedAnswer":{"@type":"Answer","text":"The coach works without AI: it explains your moves using data computed by Stockfish. Optionally you can plug in your own Gemini, OpenAI, Anthropic, OpenRouter or local-server key so it writes with AI; the key stays in your browser only."}},
+{"@type":"Question","name":"What happens to my games and data?","acceptedAnswer":{"@type":"Answer","text":"Your games are stored in your browser. Importing from Lichess or Chess.com only uses your username and those platforms' public data; Escaque never asks for passwords."}},
+{"@type":"Question","name":"Is it open source?","acceptedAnswer":{"@type":"Answer","text":"Yes. Escaque's code is published under the GPLv3 license at github.com/Omar8485/escaque."}}
+]}
+</script>
+<style>
+  :root { --bg:#faf6f0; --fg:#2b2420; --muted:#6b5f57; --link:#b4532a; --card:#fff; --line:#e7ded3; --cta:#b4532a; --ctafg:#fff; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14110e; --fg:#efe7de; --muted:#b3a597; --link:#e58a5f; --card:#1d1915; --line:#3a322b; --cta:#e58a5f; --ctafg:#14110e; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.65 system-ui, sans-serif; }
+  main { max-width:780px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:2rem; line-height:1.2; margin:8px 0 12px; } h2 { font-size:1.25rem; margin:0 0 8px; } h3 { font-size:1.02rem; margin:18px 0 2px; }
+  .muted { color:var(--muted); } .lead { font-size:1.15rem; }
+  a { color:var(--link); }
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 22px; margin-top:18px; }
+  .cta { display:inline-block; background:var(--cta); color:var(--ctafg); text-decoration:none; font-weight:600; padding:12px 22px; border-radius:12px; margin:8px 0; }
+  img { max-width:100%; height:auto; border-radius:14px; border:1px solid var(--line); }
+  li { margin:4px 0; }
+</style>
+</head>
+<body>
+<main>
+  <p class="muted"><a href="/">← Open Escaque</a> · <a href="/acerca" hreflang="es" lang="es">Español</a></p>
+  <h1>Escaque: a chess trainer with a coach, free and built for PC</h1>
+  <p class="lead">You play a game and, when you make a mistake, your coach stops you, explains why and lets you fix it. Then it turns the mistakes from your own games into puzzles so you stop repeating them.</p>
+  <p><a class="cta" href="/">Play now — free, no account</a></p>
+  <p><img src="/og-image.png" width="1200" height="630" alt="Escaque: train chess on your PC with a coach"></p>
+
+  <section>
+    <h2>What you can do</h2>
+    <ul>
+      <li><strong>Train with a coach</strong>: pick Alfred, Kairós or Ariadna. The coach comments on your moves using Stockfish data, stops you at mistakes and blunders (“Take back”, “Why?”, “Continue”) and gives hints in three levels.</li>
+      <li><strong>Play 10 rivals with personality</strong>, from about 600 Elo up to full engine strength. Each one talks in its own voice.</li>
+      <li><strong>Puzzles from your own games</strong>: import your games from Lichess, Chess.com or PGN files, and Escaque turns your mistakes and missed chances into puzzles, with spaced repetition.</li>
+      <li><strong>Track your progress</strong>: accuracy, mistakes by phase, weaknesses, openings and a training plan based on your data.</li>
+      <li><strong>Analyze games</strong> move by move, with move classification and an evaluation bar.</li>
+      <li><strong>Streaks, levels and achievements</strong> to keep the habit, with no ads.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p>The chess engine (Stockfish 17.1) runs <strong>inside your browser</strong>: your games never leave your computer and the app keeps working offline once installed. The coach needs no AI; if you want it to write with AI, you can plug in your own key (Gemini, OpenAI, Anthropic, OpenRouter or a local server).</p>
+    <p>Escaque is available in English and Spanish.</p>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <h3>Is Escaque free?</h3>
+    <p>Yes. Playing every rival with the coach is free and unlimited, and you don't need an account. There is an optional Premium plan (full history and progress, sync across devices, extra themes) that supports the project. There are no ads.</p>
+    <h3>Do I need to install anything or sign up?</h3>
+    <p>No. It runs in your PC's browser and can also be installed as an app (PWA). An account is optional and only needed for Premium and sync.</p>
+    <h3>Does it work on phones?</h3>
+    <p>Escaque is built for PC. It may work on mid-to-high-end phones and tablets, but that is not guaranteed: analysis uses the same Stockfish depth on every device, which needs capable hardware.</p>
+    <h3>Does it use AI?</h3>
+    <p>The coach works without AI: it explains your moves using data computed by Stockfish. AI is optional and uses your own key, which stays in your browser only.</p>
+    <h3>What happens to my games and data?</h3>
+    <p>Your games are stored in your browser. Importing only uses your username and the public data of Lichess or Chess.com; Escaque never asks for passwords. More in the <a href="/privacy">privacy policy</a>.</p>
+    <h3>Is it open source?</h3>
+    <p>Yes, under the GPLv3 license: <a href="https://github.com/Omar8485/escaque">github.com/Omar8485/escaque</a>. You can also suggest improvements or report bugs there.</p>
+  </section>
+
+  <p><a class="cta" href="/">Open Escaque</a></p>
+  <p class="muted">Escaque is not affiliated with Lichess or Chess.com. <a href="/licenses">Licenses and credits</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
+</main>
+</body>
+</html>

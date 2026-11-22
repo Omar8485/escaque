@@ -1,0 +1,11 @@
+/* Keep the avatar and compact XP badge visible when the existing result label is long. */
+@media (max-width: 639px) {
+  header:has([data-testid='rewards-header']) [data-testid='game-status'] {
+    max-width: 3.5rem;
+    padding-inline: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.625rem;
+  }
+}

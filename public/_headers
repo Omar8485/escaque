@@ -1,0 +1,16 @@
+# Cloudflare Workers Static Assets: cabeceras para todos los archivos de dist/.
+# Aislamiento entre orígenes requerido por Stockfish multihilo (SharedArrayBuffer).
+# No se aplica a respuestas generadas por worker/index.js (ese código las añade por su cuenta).
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+
+# Service worker: siempre revalidado, para que una versión nueva se detecte en la siguiente visita.
+/sw.js
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+
+/manifest.en.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
